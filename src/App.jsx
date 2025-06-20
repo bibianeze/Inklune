@@ -1,33 +1,44 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
-import SignUp from './pages/SignUp'
-import ConfirmResetPassword from './pages/ConfirmResetPassword'
-import CreatePostPage from './pages/CreatePostPage'
-import ForgotPassword from './pages/ForgotPassword'
-import HomePage from './pages/HomePage'
-import SignIn from './pages/SignIn'
-import ViewingPost from './pages/ViewingPost'
-import { ResetPassword } from './pages/ResetPassword'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import SignUp from "./pages/SignUp";
+import ConfirmResetPassword from "./pages/ConfirmResetPassword";
+import CreatePostPage from "./pages/CreatePostPage";
+import ForgotPassword from "./pages/ForgotPassword";
+import HomePage from "./pages/HomePage";
+import SignIn from "./pages/SignIn";
+import ViewingPost from "./pages/ViewingPost";
+import { ResetPassword } from "./pages/ResetPassword";
+import CreatePostWriting from "./pages/CreatePostWriting";
+import CreatePostPreview from "./pages/CreatePostPreview";
+import AuthorViewing from "./pages/AuthorViewing";
+import ProfilePage from "./pages/ProfilePage";
+import HomePageLoggedIn from "./pages/HomePageLoggedIn";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
-
-
   return (
     <>
-     <BrowserRouter>
-     <Routes>
-      <Route path='/' element={<HomePage/>} />
-      <Route path='/register' element={<SignUp />} />
-      <Route path='/reset' element={<ResetPassword/>} />
-      <Route path='/confirm-reset' element={<ConfirmResetPassword/>} />
-      <Route path='/create' element={<CreatePostPage/>} />
-      <Route path='/forgot-Password' element={<ForgotPassword/>} />
-      <Route path='/login' element={<SignIn/>} />
-      <Route path='/blog' element={<ViewingPost/>} />
-     </Routes>
-     </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/verify-email/:token" element={<VerifyEmail />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/forgot-Password" element={<ForgotPassword />} />
+          <Route path="/confirm-reset" element={<ConfirmResetPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+          <Route path="/create" element={<CreatePostPage />} />
+          <Route path="/writing" element={<CreatePostWriting />} />
+          <Route path="/preview" element={<CreatePostPreview />} />
+          <Route path="/bloguser" element={<ViewingPost />} />
+          <Route path="/blogauthor" element={<AuthorViewing />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/loggedin" element={<HomePageLoggedIn />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

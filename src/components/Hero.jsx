@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/Hero Image.png";
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -22,11 +23,13 @@ const Hero = () => {
                 thinkers who value connection over noise.
               </p>
               <div className="space-x-3 mt-9 flex flex-col md:flex-row gap-2">
-                <button className="bg-[rgba(138,99,247,1)] text-white  px-7 py-2 rounded hover:bg-purple-300  transition">
-                  Start Writing
-                </button>
-                <button className="border border-[rgba(138,99,247,1)] px-6 py-2 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
-                  Explore Stories
+                <Link to="/register">
+                  <button className="bg-[rgba(138,99,247,1)] text-white  px-7 py-2 rounded hover:bg-purple-300  transition">
+                    Start Writing
+                  </button>
+                </Link>
+                <button className="border border-[rgba(138,99,247,1)] px-5 py-2 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+                  <a href="">Explore Stories</a>
                 </button>
               </div>
             </div>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import inklunelogo from "../assets/Inklune logo.png";
 import { Search, Menu, X } from "lucide-react";
-
+import { Link } from "react-router-dom";
+import Explore from "./Explore";
+import Community from "./Community";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,17 +20,17 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <a className="hover:underline" href="#">
+              <a className="hover:underline" href="#explore">
                 Explore
               </a>
             </li>
             <li>
-              <a className="hover:underline" href="#">
+              <a className="hover:underline" href="#explore">
                 Categories
               </a>
             </li>
             <li>
-              <a className="hover:underline" href="#">
+              <a className="hover:underline" href="#community">
                 Community
               </a>
             </li>
@@ -42,19 +44,23 @@ const Navbar = () => {
               <Search size={16} />
             </span>
             <input
-              className="pl-8 text-sm pr-6 py-1.5 border-2 border-gray-300 rounded-2xl bg-[rgba(187,187,187,1)] "
+              className="pl-8 text-sm w-72 pr-6 py-1.5 border-2 border-gray-300 rounded-2xl bg-[rgba(187,187,187,1)] "
               placeholder="Search Stories"
               type="text"
             />
           </form>
 
           <div className="space-x-3">
-            <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
-              Sign In
-            </button>
-            <button className="bg-[rgba(138,99,247,1)] text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
-              Sign Up
-            </button>
+            <Link to="/login">
+              <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+                Sign In
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="bg-[rgba(138,99,247,1)] text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </div>
 
