@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Navbar3 from "../components/Navbar3";
 import createimg from "../assets/Frame 2147223357.png";
 import { CirclePlus } from "lucide-react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreatePostWriting = () => {
+  const { user } = useAuthContext();
   const [formData, setFormData] = useState({
     category: "",
     tags: "",
@@ -45,7 +47,9 @@ const CreatePostWriting = () => {
       <Navbar3 />
       <div className="container mx-auto w-11/12 py-6">
         <div className="space-y-4">
-          <p className="text-[rgba(142,142,142,1)]">Saved in Bibian...</p>
+          <p className="text-[rgba(142,142,142,1)]">
+            Saved in {user?.fullName}...
+          </p>
           <div className="flex flex-col gap-3">
             <div className="p-3 border rounded-xl border-[rgba(142,142,142,1)] space-y-3">
               <h1 className="text-3xl sm:text-5xl font-bold">
@@ -56,7 +60,7 @@ const CreatePostWriting = () => {
                   A Story of Pain, Secrets, and the Long Road to Healing
                 </p>
                 <h3 className="font-semibold text-lg sm:text-xl">
-                  By Bibian Okoro
+                  By {user?.fullName}
                 </h3>
               </div>
             </div>

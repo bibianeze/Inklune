@@ -3,9 +3,12 @@ import logo from "../assets/Inklune logo.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const SignIn = () => {
   const navigate = useNavigate(); // ✅ Declare navigate at the top
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login } = useAuthContext();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -59,17 +62,22 @@ const SignIn = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
       try {
         const response = await axios.post(
           "http://localhost:3000/api/auth/login",
           { ...formData }
         );
+        console.log(response);
+
         if (response.status === 200) {
           toast.success("You are logged in");
+          //store user login details and token
+          login(response.data.token, response.data.user);
 
           // ✅ Navigate to the logged-in page
           navigate("/loggedin");
-
+          setIsSubmitting(false);
           setFormData({
             email: "",
             password: "",
@@ -77,11 +85,12 @@ const SignIn = () => {
         }
       } catch (error) {
         console.log(error);
-        toast.error(error.response.data.message);
-         setFormData({
-           email: "",
-           password: "",
-         });
+        toast.error(error?.response?.data?.message);
+        setIsSubmitting(false);
+        setFormData({
+          email: "",
+          password: "",
+        });
       }
     }
   };
@@ -149,9 +158,10 @@ const SignIn = () => {
         <div className="space-y-4">
           <button
             type="submit"
-            className="w-full p-2 bg-[rgba(138,99,247,1)] rounded-lg text-white hover:bg-purple-400"
+            disabled={isSubmitting}
+            className="w-full p-2 bg-[rgba(138,99,247,1)] rounded-lg text-white hover:bg-purple-400 cursor-pointer"
           >
-            Sign In
+            {isSubmitting ? "Signing in.." : "Sign In"}
           </button>
           <p className="text-center text-[#797171]">
             Don’t have an account yet?{" "}

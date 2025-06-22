@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import forgotimg from "../assets/Frame 56.png";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const redirect = useNavigate();
 
   // Email regex
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -18,7 +22,7 @@ const ForgotPassword = () => {
   };
 
   // Handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email.trim()) {
@@ -28,7 +32,20 @@ const ForgotPassword = () => {
     } else {
       setError("");
       console.log("Email submitted:", email);
+      setIsSubmitting(true);
       // Submit to server here
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/auth/forgot-password",
+          { email }
+        );
+        if ((response.status = 200)) {
+          redirect("/confirm-reset");
+        }
+      } catch (error) {
+        toast.error(error?.response?.data?.message);
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -70,12 +87,19 @@ const ForgotPassword = () => {
 
             <button
               type="submit"
-              className="relative bg-[rgba(138,99,247,1)] flex items-center gap-2 text-white px-4 py-2 rounded hover:bg-purple-400"
+              disabled={isSubmitting}
+              className="relative cursor-pointer bg-[rgba(138,99,247,1)] flex items-center gap-2 text-white px-4 py-2 rounded hover:bg-purple-400"
             >
-              Next{" "}
-              <span>
-                <ArrowRight size={16} />
-              </span>
+              {isSubmitting ? (
+                "Sending...."
+              ) : (
+                <>
+                  Next{" "}
+                  <span>
+                    <ArrowRight size={16} />
+                  </span>
+                </>
+              )}
             </button>
           </form>
 

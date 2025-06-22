@@ -3,17 +3,28 @@ import inklunelogo from "../assets/Inklune logo.png";
 import personicon from "../assets/Signup comp.png";
 import { Search, Menu, X } from "lucide-react";
 import { Ellipsis } from "lucide-react";
-import { Bell } from "lucide-react";
+import { LogOut } from "lucide-react";
+
 import write from "../assets/hugeicons_quill-write-02.png";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar3 = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuthContext();
+  const redirect = useNavigate();
+  const handleLogout = () => {
+    logout();
+    redirect("/login");
+  };
   return (
     <div>
       <div className="bg-white shadow-2xl py-4 w-full">
         <nav className="container mx-auto w-11/12 flex justify-between items-center">
           {/* Left: Logo + Nav Links */}
           <div className="flex items-center gap-4">
-            <img src={inklunelogo} alt="inklune logo" className="w-24" />
+            <Link to="/loggedin">
+              <img src={inklunelogo} alt="inklune logo" className="w-24" />
+            </Link>
             <form className="hidden md:flex items-center gap-2">
               <span className="relative left-9  text-gray-400 font-bold">
                 <Search size={16} />
@@ -28,8 +39,20 @@ const Navbar3 = () => {
 
           <div className="hidden md:flex gap-5 items-center">
             <div className="flex gap-5 items-center">
-              <Bell className="text-gray-500" />
-              <img src={personicon} alt="" />
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer"
+                title="Log Out"
+              >
+                <LogOut className="text-red-500" />
+              </button>
+              <Link to="/profile" className="cursor-pointer">
+                <img
+                  src={user?.profilePicture}
+                  alt=""
+                  className="w-[40px] h-[40px]"
+                />
+              </Link>
             </div>
           </div>
 
@@ -56,8 +79,20 @@ const Navbar3 = () => {
               />
             </form>
             <div className="flex gap-5 items-center mt-[-5px]">
-              <Bell className="text-gray-500 hidden" />
-              <img src={personicon} alt="" />
+              <button
+                onClick={handleLogout}
+                className="cursor-pointer"
+                title="Log Out"
+              >
+                <LogOut className="text-red-500" />
+              </button>
+              <Link to="/profile" className="cursor-pointer">
+                <img
+                  src={user?.profilePicture}
+                  alt=""
+                  className="w-[40px] h-[40px]"
+                />
+              </Link>
             </div>
           </div>
         )}

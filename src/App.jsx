@@ -14,6 +14,7 @@ import AuthorViewing from "./pages/AuthorViewing";
 import ProfilePage from "./pages/ProfilePage";
 import HomePageLoggedIn from "./pages/HomePageLoggedIn";
 import VerifyEmail from "./pages/VerifyEmail";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -28,13 +29,15 @@ function App() {
           <Route path="/confirm-reset" element={<ConfirmResetPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-          <Route path="/create" element={<CreatePostPage />} />
-          <Route path="/writing" element={<CreatePostWriting />} />
-          <Route path="/preview" element={<CreatePostPreview />} />
-          <Route path="/bloguser" element={<ViewingPost />} />
-          <Route path="/blogauthor" element={<AuthorViewing />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/loggedin" element={<HomePageLoggedIn />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/loggedin" element={<HomePageLoggedIn />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/create" element={<CreatePostPage />} />
+            <Route path="/writing" element={<CreatePostWriting />} />
+            <Route path="/preview" element={<CreatePostPreview />} />
+            <Route path="/bloguser" element={<ViewingPost />} />
+            <Route path="/blogauthor" element={<AuthorViewing />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

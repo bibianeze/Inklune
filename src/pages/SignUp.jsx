@@ -10,6 +10,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -50,6 +51,7 @@ const SignUp = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       console.log("Form submitted:", formData);
+      setIsSubmitting(true);
       // Submit the form (e.g., API call)
       try {
         const response = await axios.post(
@@ -61,6 +63,7 @@ const SignUp = () => {
         if (response.status === 201) {
           // toast success
           toast.success("Registration successful, proceed to verify");
+          setIsSubmitting(false);
           setFormData({
             fullName: "",
             email: "",
@@ -70,6 +73,8 @@ const SignUp = () => {
         }
       } catch (error) {
         console.log(error);
+        toast.error(error?.response?.data?.message);
+        setIsSubmitting(false);
       }
     }
   };
@@ -186,9 +191,10 @@ const SignUp = () => {
         <div className="space-y-4">
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full p-2 bg-[rgba(138,99,247,1)] rounded-lg text-white hover:bg-purple-400"
           >
-            Sign Up
+            {isSubmitting ? "Signing up.." : "Sign up"}
           </button>
           <p className="text-center text-[#797171]">
             Already have an account?{" "}

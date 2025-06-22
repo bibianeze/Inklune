@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Navbar from "../components/Navbar";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const ResetPassword = () => {
   const { token } = useParams();
@@ -13,6 +14,7 @@ export const ResetPassword = () => {
     password: "",
     confirmPassword: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -62,6 +64,7 @@ export const ResetPassword = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       console.log("Password reset successful:", formData);
+      setIsSubmitting(true);
       // Proceed to API or next step
       try {
         const response = await axios.post(
@@ -69,10 +72,13 @@ export const ResetPassword = () => {
           { token, password: formData.password }
         );
         if (response.status === 200) {
+          toast.success("Password reset successful");
           redirect("/login");
         }
       } catch (error) {
         console.log(error);
+        toast.error(error?.response?.data?.message);
+        setIsSubmitting(false);
       }
     }
   };
@@ -129,12 +135,19 @@ export const ResetPassword = () => {
             {/* Submit button */}
             <button
               type="submit"
+              disabled={isSubmitting}
               className="relative bg-[rgba(138,99,247,1)] flex items-center gap-2 text-white px-4 py-2 rounded hover:bg-purple-400"
             >
-              Next{" "}
-              <span>
-                <ArrowRight size={16} />
-              </span>
+              {isSubmitting ? (
+                "Resetting...."
+              ) : (
+                <>
+                  Next{" "}
+                  <span>
+                    <ArrowRight size={16} />
+                  </span>
+                </>
+              )}
             </button>
           </form>
 

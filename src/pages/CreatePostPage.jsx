@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Navbar3 from "../components/Navbar3";
 import { CirclePlus } from "lucide-react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreatePostPage = () => {
+  const { user } = useAuthContext();
   const [formData, setFormData] = useState({
     title: "",
     media: "",
@@ -42,7 +44,7 @@ const CreatePostPage = () => {
       <Navbar3 />
       <div className="container mx-auto w-11/12 py-6 text-[rgba(142,142,142,1)]">
         <div>
-          <p className="my-4">Draft in Bibian...</p>
+          <p className="my-4">Draft in {user?.fullName}...</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Title */}
             <div className="flex flex-col gap-1">
