@@ -103,12 +103,16 @@ const Navbar = () => {
           </form>
 
           <div className="mt-4 flex flex-col gap-2">
-            <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
-              Sign In
-            </button>
-            <button className="bg-[rgba(138,99,247,1)] text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
-              Sign Up
-            </button>
+             <Link to="/login">
+              <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+                Sign In
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="bg-[rgba(138,99,247,1)] text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </div>
       )}

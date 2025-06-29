@@ -40,9 +40,7 @@ const HomePosts = () => {
                     {pro.author}
                   </p>
                 </div>
-                <button className="bg-[rgba(188,178,218,0.3)] px-4 rounded-xl text-sm py-1">
-                  Follow
-                </button>
+                
               </div>
 
               {/* Post Content */}

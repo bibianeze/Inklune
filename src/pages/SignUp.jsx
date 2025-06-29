@@ -55,8 +55,8 @@ const SignUp = () => {
       // Submit the form (e.g., API call)
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/auth/register",
-          { ...formData }
+          "http://localhost:8000/api/auth/register",
+          { ...formData },
         );
         console.log(response);
 
