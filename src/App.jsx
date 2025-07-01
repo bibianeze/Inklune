@@ -35,7 +35,7 @@ function App() {
             <Route path="/create" element={<CreatePostPage />} />
             <Route path="/writing" element={<CreatePostWriting />} />
             <Route path="/preview" element={<CreatePostPreview />} />
-            <Route path="/bloguser" element={<ViewingPost />} />
+            <Route path="/blog/:blogId" element={<ViewingPost />} />
             <Route path="/blogauthor" element={<AuthorViewing />} />
           </Route>
         </Routes>

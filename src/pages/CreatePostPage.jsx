@@ -2,40 +2,100 @@ import React, { useState } from "react";
 import Navbar3 from "../components/Navbar3";
 import { CirclePlus } from "lucide-react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const CreatePostPage = () => {
-  const { user } = useAuthContext();
+  const { user, token } = useAuthContext();
   const [formData, setFormData] = useState({
     title: "",
-    media: "",
-    story: "",
+    subtitle: "",
+    media: null, // ← now a File object
+    description: "",
     category: "",
-    tags: "",
+    tag: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === "media" && files.length > 0) {
+      const file = files[0];
+      setFormData({ ...formData, media: file });
+      setImagePreview(URL.createObjectURL(file)); // Set preview
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
 
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const newErrors = {};
     if (!formData.title.trim()) newErrors.title = "Title is required.";
-    if (!formData.media.trim()) newErrors.media = "Media is required.";
-    if (!formData.story.trim()) newErrors.story = "Story is required.";
+    if (!formData.subtitle.trim()) newErrors.subtitle = "Subtitle is required.";
+    if (!formData.media) newErrors.media = "Media file is required.";
+    if (!formData.description.trim())
+      newErrors.description = "Story is required.";
     if (!formData.category.trim()) newErrors.category = "Category is required.";
-    if (!formData.tags.trim()) newErrors.tags = "Tags are required.";
+    if (!formData.tag.trim()) newErrors.tag = "Tag is required.";
     return newErrors;
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
+
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted", formData);
-    } else {
+    if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("subtitle", formData.subtitle);
+      data.append("image", formData.media); // File object
+      data.append("description", formData.description);
+      data.append("category", formData.category);
+      data.append("tag", formData.tag); // Assuming it's comma-separated
+
+      const response = await axios.post(
+        "http://localhost:3000/api/blog",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        setIsSubmitting(false);
+        setFormData({
+          title: "",
+          subtitle: "",
+          media: null,
+          description: "",
+          category: "",
+          tag: "",
+        });
+        setImagePreview(null);
+        toast.success("Blog created successfully");
+      }
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
+      toast.error(
+        error?.response?.data?.message || "An error occurred while posting"
+      );
     }
   };
 
@@ -60,36 +120,63 @@ const CreatePostPage = () => {
                 <span className="text-red-500 text-sm">{errors.title}</span>
               )}
             </div>
-
-            {/* Media */}
+            {/* subtitle */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center relative">
                 <CirclePlus className="absolute ml-3" />
                 <input
                   type="text"
-                  name="media"
-                  value={formData.media}
+                  name="subtitle"
+                  value={formData.subtitle}
                   onChange={handleChange}
-                  placeholder="Add Images, Video, links..."
+                  placeholder="subtitle"
+                  className="pl-10 rounded-xl font-medium text-[20px]  p-4 w-full border"
+                />
+              </div>
+              {errors.subtitle && (
+                <span className="text-red-500 text-sm">{errors.subtitle}</span>
+              )}
+            </div>
+
+            {/* Media */}
+
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center relative">
+                <CirclePlus className="absolute ml-3" />
+                <input
+                  type="file"
+                  name="media"
+                  accept="image/*"
+                  onChange={handleChange}
                   className="pl-10 py-2 rounded-xl w-full border"
                 />
               </div>
               {errors.media && (
                 <span className="text-red-500 text-sm">{errors.media}</span>
               )}
+
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="h-[350px] w-full object-cover rounded-md mt-2"
+                />
+              )}
             </div>
 
             {/* Story */}
             <div className="flex flex-col gap-1">
               <textarea
-                name="story"
-                value={formData.story}
+                name="description"
+                value={formData.description}
                 onChange={handleChange}
                 placeholder="Tell your story"
                 className="w-full border rounded-xl h-[250px] p-4"
               ></textarea>
-              {errors.story && (
-                <span className="text-red-500 text-sm">{errors.story}</span>
+              {errors.description && (
+                <span className="text-red-500 text-sm">
+                  {errors.description}
+                </span>
               )}
             </div>
 
@@ -117,15 +204,15 @@ const CreatePostPage = () => {
                 <CirclePlus className="absolute ml-3" />
                 <input
                   type="text"
-                  name="tags"
-                  value={formData.tags}
+                  name="tag"
+                  value={formData.tag}
                   onChange={handleChange}
                   placeholder="Add Tags"
                   className="pl-10 py-2 rounded-xl w-full sm:w-1/2 border"
                 />
               </div>
-              {errors.tags && (
-                <span className="text-red-500 text-sm">{errors.tags}</span>
+              {errors.tag && (
+                <span className="text-red-500 text-sm">{errors.tag}</span>
               )}
             </div>
 
@@ -140,8 +227,9 @@ const CreatePostPage = () => {
               <button
                 type="submit"
                 className="py-3 rounded-xl w-full sm:w-80 text-white bg-[rgba(138,99,247,1)]"
+                disabled={isSubmitting}
               >
-                Publish
+                {isSubmitting ? "Publishing...." : "Publish"}
               </button>
             </div>
           </form>

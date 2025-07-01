@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import inklunelogo from "../assets/Inklune logo.png";
 import personicon from "../assets/Signup comp.png";
 import { Search, Menu, X } from "lucide-react";
@@ -6,15 +6,24 @@ import { Ellipsis } from "lucide-react";
 import { LogOut } from "lucide-react";
 import write from "../assets/hugeicons_quill-write-02.png";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useBlogContext } from "../hooks/useBlogContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const LoggedInNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuthContext();
+  const { setSearch } = useBlogContext();
   const redirect = useNavigate();
+  const inputref = useRef(null);
   const handleLogout = () => {
     logout();
     redirect("/login");
+  };
+
+  const handleSearchBlog = (e) => {
+    e.preventDefault();
+    console.log(inputref.current.value);
+    setSearch(inputref.current.value);
   };
 
   return (
@@ -26,7 +35,10 @@ const LoggedInNavbar = () => {
             <Link to="/loggedin">
               <img src={inklunelogo} alt="inklune logo" className="w-24" />
             </Link>
-            <form className="hidden md:flex items-center gap-2">
+            <form
+              onSubmit={handleSearchBlog}
+              className="hidden md:flex items-center gap-2"
+            >
               <span className="relative left-9  text-gray-400 font-bold">
                 <Search size={16} />
               </span>
@@ -34,6 +46,7 @@ const LoggedInNavbar = () => {
                 className="pl-8 w-72 text-sm pr-6 py-1.5 border-2 border-gray-300 rounded-2xl bg-[rgba(187,187,187,1)] "
                 placeholder="Search Stories"
                 type="text"
+                ref={inputref}
               />
             </form>
           </div>
