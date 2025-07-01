@@ -68,7 +68,7 @@ export const ResetPassword = () => {
       // Proceed to API or next step
       try {
         const response = await axios.post(
-          `http://localhost:3000/api/auth/reset-password`,
+          `http://localhost:8000/api/auth/reset-password`,
           { token, password: formData.password }
         );
         if (response.status === 200) {

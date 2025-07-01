@@ -13,7 +13,7 @@ const VerifyEmail = () => {
     const handleVerify = async () => {
       try {
         const response = await axios.post(
-          `http://localhost:3000/api/auth/verify-email/${token}`,
+          `http://localhost:8000/api/auth/verify-email/${token}`,
           { token }
         );
         if (response.status === 200) {

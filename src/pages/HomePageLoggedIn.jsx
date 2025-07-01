@@ -32,7 +32,7 @@ const HomePageLoggedIn = () => {
       <div className="container mx-auto w-11/12 py-6">
         {/* Navigation Buttons */}
         <div className="flex flex-wrap gap-3 mb-4">
-          {["Home", "Following", "Popular", "Recommended"].map((text, idx) => (
+          {["Home", "Popular", "Recommended"].map((text, idx) => (
             <button
               key={idx}
               className={`hover:bg-purple-300 hover:py-1 hover:px-2 hover:rounded-lg hover:text-white ${
@@ -117,63 +117,9 @@ const HomePageLoggedIn = () => {
               </button>
             </div>
 
-            <div className="bg-[rgba(196,192,207,0.1)] p-4 rounded ">
-              <h3 className="font-semibold text-xl md:text-2xl mb-6">
-                Featured Writers
-              </h3>
-              {featured.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center mb-5 gap-2 flex-wrap"
-                >
-                  <div className="flex gap-4 items-center">
-                    <img
-                      className="w-12 h-12 object-cover rounded-full"
-                      src={feature.image}
-                      alt=""
-                    />
-                    <div className="text-sm">
-                      <h3 className="font-semibold">
-                        {feature.featuredAuthor}
-                      </h3>
-                      <p className="text-gray-600">{feature.Ftitle}</p>
-                    </div>
-                  </div>
-                  <button
-                    className="bg-[rgba(188,178,218,0.3)] py-1 px-4 rounded-xl text-sm"
-                    onClick={() => setShowFollowing(true)}
-                  >
-                    Follow
-                  </button>
-                </div>
-              ))}
-            </div>
 
-            <div className="bg-[rgba(196,192,207,0.1)] p-4 rounded">
-              <h3 className="font-semibold mb-2">Popular Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "#WritingLife",
-                  "#CreativeProcess",
-                  "#Poetry",
-                  "#Love",
-                  "#VentureCapital",
-                  "#Inspiration",
-                  "#LitaryLife",
-                  "#TraumaHealing",
-                  "#Gaming",
-                  "#WritingTips",
-                  "#Fiction",
-                ].map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-[rgba(188,178,218,0.3)] p-1 px-3 rounded-xl text-sm cursor-pointer"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+
+            
           </div>
         </div>
       </div>
