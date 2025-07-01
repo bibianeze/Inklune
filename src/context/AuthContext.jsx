@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(updatedUser));
   };
 
-  // login - email, password, role
+  // login - email, password
   // setToken() setUser()
   return (
     <authContext.Provider

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoggedInNavbar from "../components/LoggedInNavbar";
 import { ArrowLeft } from "lucide-react";
 import { EllipsisVertical } from "lucide-react";
@@ -14,9 +14,79 @@ import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { ThumbsDown } from "lucide-react";
+import { useParams } from "react-router-dom";
+import Loading from "../components/Loading";
+import axios from "axios";
+import moment from "moment";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { toast } from "react-toastify";
+//get the params
 
 const ViewingPost = () => {
   const [showOptions, setShowOptions] = useState(false);
+  const { blogId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [blog, setBlog] = useState({});
+  const [text, setText] = useState("");
+  const { token } = useAuthContext();
+
+  const handleGetBlog = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios(`http://localhost:3000/api/blog/${blogId}`);
+      console.log(data);
+      setBlog(data.blog);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    handleGetBlog();
+  }, []);
+
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3000/api/blog/${blogId}/comment`,
+        { text },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (data.success) {
+        toast.success("Comment Added");
+        setBlog(data.blog);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/blog/${blogId}/comment/${commentId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (response.status === 200) {
+        toast.success("Comment deleted");
+      }
+      if (response.status === 403) {
+        toast.error("You do not have permission to delete this comment");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if (isLoading) {
+    return (
+      <div>
+        <LoggedInNavbar />
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <div>
       <LoggedInNavbar />
@@ -64,73 +134,31 @@ const ViewingPost = () => {
               {/* Article content */}
               <div className="flex flex-col gap-3">
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
-                  The Silent Battles We Bring Into Love
+                  {blog.title}
                 </h1>
                 <div className="text-sm flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center">
-                  <span className="border py-1 px-3 rounded-lg w-fit">
-                    Science
+                  <span className="border py-1 px-3 rounded-lg w-fit capitalize">
+                    {blog.tag}
                   </span>
-                  <span>April 21, 2025</span>
+                  <span>{moment(blog.createdAt).format("MMM Do YY")}</span>
                 </div>
 
                 {/* Article body */}
                 <div>
                   <div className="space-y-5">
-                    <img className="w-full rounded-lg" src={bmess} alt="" />
+                    <img
+                      className="w-full rounded-lg h-[495px] object-cover"
+                      src={blog.image}
+                      alt=""
+                    />
                     <p className="leading-relaxed text-sm sm:text-base">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Impedit reiciendis optio distinctio fuga a nihil et quo
-                      minima aut error, quia sequi quaerat odio aspernatur
-                      voluptatum incidunt dolor sint minus natus praesentium
-                      ipsa quibusdam vel exercitationem! Est, tempora. Possimus
-                      veniam fugit ipsa eaque reiciendis, dolore voluptatum
-                      natus corporis laudantium delectus facilis, cupiditate vel
-                      necessitatibus at a consequuntur eos doloremque? Molestias
-                      ipsum dolor accusantium id expedita voluptatem. Illo
-                      incidunt odio commodi, itaque adipisci aut tempora
-                      dignissimos? Corporis, laborum quidem! Illo tenetur
-                      quaerat nisi, vero animi maxime ducimus, culpa atque
-                      repudiandae incidunt ratione placeat eum reprehenderit
-                      praesentium magni, optio iusto asperiores quo doloribus
-                      aperiam temporibus voluptas excepturi et? Perspiciatis
-                      adipisci fugit velit numquam neque, ipsum quibusdam
-                      doloribus, sed dicta dolore deserunt quae nobis
-                      asperiores? Iure facilis maiores, recusandae quasi aliquid
-                      alias incidunt excepturi earum ex magnam aut ullam laborum
-                      quis magni veritatis quisquam! Quas eius assumenda
-                      recusandae esse ratione libero odio rerum alias minus
-                      inventore? Perferendis inventore suscipit nam autem id in
-                      molestiae ut, totam nostrum iste at quaerat, saepe
-                      accusantium! Praesentium dicta nostrum numquam magni nulla
-                      ducimus, soluta iusto ab eligendi. Sint ab hic itaque quas
-                      sequi corrupti vitae eligendi delectus rerum, libero
-                      assumenda, aperiam dolorem commodi repellendus beatae,
-                      quae nisi perferendis? Odit nostrum eaque optio explicabo
-                      repudiandae! Quod eaque consequatur facilis, esse numquam
-                      aliquid dolorum saepe doloremque quibusdam ut vero debitis
-                      accusamus optio ipsam. Obcaecati, iste nemo vitae tempore
-                      tempora illo quae voluptatem laborum, itaque voluptatibus
-                      atque exercitationem rerum quod consectetur vel reiciendis
-                      modi quaerat repellendus sed molestiae error possimus,
-                      officia facere dignissimos modi ipsa voluptatum cumque
-                      tempora sint adipisci hic illo necessitatibus nihil eos
-                      repudiandae cupiditate omnis optio aperiam! Quo sunt quis
-                      eum at explicabo fugiat laudantium nostrum fugit animi,
-                      officia dolorem? Laborum inventore dicta sint unde fugiat
-                      eius autem alias dolorum veniam delectus ipsum pariatur
-                      voluptatum placeat, impedit nulla consequuntur odit
-                      molestias porro repellat explicabo ipsa tempore excepturi
-                      accusantium officia? Praesentium nisi explicabo delectus
-                      in! Adipisci sint aliquid vel iste accusantium recusandae
-                      corrupti sapiente beatae eos. Asperiores, quaerat labore?
-                      Quia eos delectus, commodi, aut deserunt rerum, aliquid
-                      repellendus illum eaque laborum assumenda ipsam expedita.
-                      Dicta, illum! Iure labore aspernatur adipisci dolorem
-                      nostrum minima facilis, omnis, incidunt voluptas saepe vel
-                      explicabo cumque illum dolorum nobis numquam mollitia
-                      earum nisi dicta soluta ipsa impedit! In ea tempora{" "}
+                      {blog.description}
                     </p>
-                    <img src={tags} alt="" className="w-full" />
+                    <div>
+                      <p className="bg-amber-200 rounded-lg px-1.5 w-fit">
+                        #{blog.tag}
+                      </p>
+                    </div>
 
                     {/* Like/Dislike section */}
                     <div>
@@ -154,11 +182,17 @@ const ViewingPost = () => {
                   <div className="mt-6 flex flex-col gap-4">
                     <div className="bg-white p-3 sm:p-4 rounded-xl flex flex-col gap-2">
                       <h3 className="text-lg font-semibold">Comment</h3>
-                      <form className="relative w-full">
+                      <form
+                        className="relative w-full"
+                        onSubmit={handleAddComment}
+                      >
                         <input
                           type="text"
                           className="bg-[rgba(188,178,218,0.3)] w-full border border-gray-400 px-4 py-3 pr-4 sm:pr-24 rounded-xl text-sm sm:text-base"
                           placeholder="Enter a comment"
+                          required
+                          value={text}
+                          onChange={(e) => setText(e.target.value)}
                         />
                         <button
                           type="submit"
@@ -170,42 +204,46 @@ const ViewingPost = () => {
                       </form>
                     </div>
 
-                    <div className="bg-white p-3 sm:p-4 rounded-xl space-y-4">
-                      {comments.map((comment) => {
-                        return (
-                          <div
-                            key={comment.id}
-                            className="py-2 bg-[rgba(188,178,218,0.3)] p-3 rounded-xl"
-                          >
-                            <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-0">
-                              <div className="flex items-center gap-2">
-                                <img
-                                  src={comment.imgicon}
-                                  alt=""
-                                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
-                                />
-                                <p className="text-sm sm:text-base font-medium">
-                                  {comment.author}
+                    {blog.comments.length > 0 && (
+                      <div className="bg-white p-3 sm:p-4 rounded-xl space-y-4">
+                        {blog.comments.map((comment) => {
+                          return (
+                            <div
+                              key={comment._id}
+                              className="py-2 bg-[rgba(188,178,218,0.3)] p-3 rounded-xl"
+                            >
+                              <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-0">
+                                <div className="flex items-center gap-2">
+                                  <img
+                                    src={comment.user.profilePicture}
+                                    alt=""
+                                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
+                                  />
+                                  <p className="text-sm sm:text-base font-medium">
+                                    {comment.user.fullName}
+                                  </p>
+                                </div>
+                                <div className="flex gap-2 items-center self-start sm:self-auto">
+                                  <button
+                                    onClick={() =>
+                                      handleDeleteComment(comment._id)
+                                    }
+                                    className="hover:text-red-500 transition-colors"
+                                  >
+                                    <Trash2 size={17} color="gray" />
+                                  </button>
+                                </div>
+                              </div>
+                              <div className="border border-gray-400 bg-white p-3 sm:p-3.5 rounded-xl mt-2">
+                                <p className="text-gray-600 text-sm sm:text-base">
+                                  {comment.text}
                                 </p>
                               </div>
-                              <div className="flex gap-2 items-center self-start sm:self-auto">
-                                <button className="hover:text-red-500 transition-colors">
-                                  <ThumbsUp size={17} color="red" />
-                                </button>
-                                <button className="hover:text-red-500 transition-colors">
-                                  <ThumbsDown size={17} />
-                                </button>
-                              </div>
                             </div>
-                            <div className="border border-gray-400 bg-white p-3 sm:p-3.5 rounded-xl mt-2">
-                              <p className="text-gray-600 text-sm sm:text-base">
-                                {comment.comments}
-                              </p>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
