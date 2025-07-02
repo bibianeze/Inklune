@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { ThumbsDown } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import axios from "axios";
 import moment from "moment";
@@ -98,10 +98,13 @@ const ViewingPost = () => {
             <div className="w-full">
               {/* Header section */}
               <div className="flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-0 mb-7">
-                <button className="bg-white flex gap-1 items-center px-2 py-1 rounded w-fit">
-                  <ArrowLeft size={19} />
-                  <span>back</span>
-                </button>
+                <Link to="/loggedin">
+                  <button className="bg-white flex gap-1 items-center px-2 py-1 rounded w-fit">
+                    <ArrowLeft size={19} />
+                    <span>back</span>
+                  </button>
+                </Link>
+
                 <div className="relative self-start sm:self-auto">
                   <button
                     className="bg-white rounded h-[34px] p-1"
@@ -253,7 +256,9 @@ const ViewingPost = () => {
             <div className="w-full xl:max-w-[400px] space-y-6">
               {/* Author posts section */}
               <div className="bg-[rgba(196,192,207,0.1)] rounded-xl grid grid-cols-1 gap-5 py-5 w-full px-4">
-                <h3 className="text-lg font-semibold">Bibian Okoro</h3>
+                <h3 className="text-lg font-semibold">
+                  {blog.author.fullName}
+                </h3>
                 <hr className="text-gray-300" />
 
                 <div className="space-y-6">
