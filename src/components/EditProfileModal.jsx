@@ -35,7 +35,7 @@ const EditProfileModal = ({ onClose }) => {
       }
 
       const response = await axios.patch(
-        "http://localhost:3000/api/auth/user",
+        "http://localhost:8000/api/auth/user",
         formData,
         {
           headers: {

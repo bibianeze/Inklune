@@ -4,8 +4,10 @@ import { CirclePlus } from "lucide-react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreatePostPage = () => {
+  const redirect = useNavigate()
   const { user, token } = useAuthContext();
   const [formData, setFormData] = useState({
     title: "",
@@ -19,17 +21,35 @@ const CreatePostPage = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
+ // Function to handle changes in form inputs
+const handleChange = (e) => {
+  // Destructure useful properties from the event target (i.e., the input element that triggered the change)
+  const { name, value, files } = e.target;
 
-    if (name === "media" && files.length > 0) {
-      const file = files[0];
-      setFormData({ ...formData, media: file });
-      setImagePreview(URL.createObjectURL(file)); // Set preview
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+  // Check if the input field's "name" is "media" (typically for file uploads like images or videos)
+  if (name === "media" && files.length > 0) {
+    // Get the first file from the uploaded files (only one file is expected)
+    const file = files[0];
+
+    // Update the form data state with the new file under the "media" key
+    setFormData({
+      ...formData, // keep the existing data
+      media: file  // update only the media field
+    });
+
+    // Generate a preview URL for the uploaded file and store it in a separate state variable
+    // This allows you to show a preview (like an image preview) in the UI
+    setImagePreview(URL.createObjectURL(file));
+  } else {
+    // For all other input types (e.g., text, email, password, etc.)
+    // Update the form data state with the new value for the specific field
+    setFormData({
+      ...formData,        // spread the existing form data
+      [name]: value       // update the changed field dynamically using the input's "name" attribute
+    });
+  }
+};
+
 
   const [errors, setErrors] = useState({});
 
@@ -45,59 +65,78 @@ const CreatePostPage = () => {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrors({});
+// This function handles form submission
+const handleSubmit = async (e) => {
+  e.preventDefault(); // Prevents the default form reload/refresh behavior
 
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  setErrors({}); // Clear any existing validation errors
 
-    try {
-      setIsSubmitting(true);
+  // Run the validate() function to check for client-side form errors
+  const validationErrors = validate();
 
-      const data = new FormData();
-      data.append("title", formData.title);
-      data.append("subtitle", formData.subtitle);
-      data.append("image", formData.media); // File object
-      data.append("description", formData.description);
-      data.append("category", formData.category);
-      data.append("tag", formData.tag); // Assuming it's comma-separated
+  // If there are validation errors, set them in state and stop the submission
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return; // Exit the function if validation fails
+  }
 
-      const response = await axios.post(
-        "http://localhost:3000/api/blog",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+  try {
+    setIsSubmitting(true); // Indicate loading/submitting state (e.g., to disable the button)
 
-      if (response.status === 201) {
-        setIsSubmitting(false);
-        setFormData({
-          title: "",
-          subtitle: "",
-          media: null,
-          description: "",
-          category: "",
-          tag: "",
-        });
-        setImagePreview(null);
-        toast.success("Blog created successfully");
+    // Create a new FormData object to send text and file data
+    const data = new FormData();
+
+    // Append each form field to the FormData object
+    data.append("title", formData.title);                 // Add the blog title
+    data.append("subtitle", formData.subtitle);           // Add the blog subtitle
+    data.append("image", formData.media);                 // Add the uploaded image file
+    data.append("description", formData.description);     // Add the blog body/description
+    data.append("category", formData.category);           // Add the selected category
+    data.append("tag", formData.tag);                     // Add the tags (e.g., comma-separated string)
+
+    // Send a POST request to your backend API to create the blog post
+    const response = await axios.post(
+      "http://localhost:3000/api/blog", // Backend blog creation endpoint
+      data,                             // Payload is the FormData object
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,               // Send user token for protected route
+          "Content-Type": "multipart/form-data",          // Must specify this to upload files
+        },
       }
-    } catch (error) {
-      console.error(error);
-      setIsSubmitting(false);
-      toast.error(
-        error?.response?.data?.message || "An error occurred while posting"
-      );
+    );
+
+    // If the blog was successfully created
+    if (response.status === 201) {
+      setIsSubmitting(false); // Stop showing loading/spinner state
+
+      // Reset form fields and preview
+      setFormData({
+        title: "",
+        subtitle: "",
+        media: null,
+        description: "",
+        category: "",
+        tag: "",
+      });
+      setImagePreview(null); // Clear the image preview
+
+      // Show success message
+      toast.success("Blog created successfully");
+      redirect("/loggedin")
+
     }
-  };
+  } catch (error) {
+    console.error(error);        // Log the error in the console
+    setIsSubmitting(false);      // Remove loading state
+
+    // Show error message using toast, or a fallback if no message is returned
+    toast.error(
+      error?.response?.data?.message || "An error occurred while posting"
+    );
+  }
+};
+
 
   return (
     <div>

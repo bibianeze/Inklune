@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { ThumbsDown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ViewingPost = () => {
   const [showOptions, setShowOptions] = useState(false);
@@ -28,10 +29,11 @@ const ViewingPost = () => {
             <div className="w-full">
               {/* Header section */}
               <div className="flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-0 mb-7">
-                <button className="bg-white flex gap-1 items-center px-2 py-1 rounded w-fit">
+                <Link to= "/loggedin">
+                <button className="bg-white flex gap-1 items-center px-2 py-1 rounded w-fit cursor-pointer">
                   <ArrowLeft size={19} />
                   <span>back</span>
-                </button>
+                </button></Link>
                 <div className="relative self-start sm:self-auto">
                   <button
                     className="bg-white rounded h-[34px] p-1"

@@ -5,8 +5,11 @@ import { ArrowRight, ArrowLeft, X, Ellipsis } from "lucide-react";
 import HomePosts from "../components/HomePosts";
 import { featured } from "../Data/featured";
 import FollowingPosts from "../components/FollowingPosts";
-
+import { useBlogContext } from "../hooks/useBlogContext";
+import { Link } from "react-router-dom";
+import moment from "moment";
 const HomePageLoggedIn = () => {
+   const { isLoading, blogs } = useBlogContext();
   const scrollRef = useRef(null);
   const [cards, setCards] = useState(homeprofile);
   const [showFollowing, setShowFollowing] = useState(false);
@@ -61,17 +64,16 @@ const HomePageLoggedIn = () => {
             className="flex overflow-x-scroll no-scrollbar scroll-smooth space-x-4"
             ref={scrollRef}
           >
-            {cards.map((homep) => (
+            {blogs.slice(0,7).map((homep) => (
               <div
-                key={homep.id}
+                key={homep._id}
                 className="flex-shrink-0 w-[300px] sm:w-[250px] md:w-[300px] h-[400px] rounded-lg shadow-lg bg-cover bg-center text-white flex items-end relative"
                 style={{
-                  backgroundImage:
-                    "url('https://images.squarespace-cdn.com/content/v1/537cad0be4b02cb9fe04985f/1438704698248-TWKUDI932Y2VXOXNAUCJ/Writing.jpg?format=2500w')",
+                  backgroundImage: `url(${homep.image})`
                 }}
               >
                 <button
-                  onClick={() => handleDelete(homep.id)}
+                  onClick={() => handleDelete(homep._id)}
                   className="absolute top-0 right-0 p-2 bg-opacity-50 hover:bg-opacity-80 rounded-full"
                 >
                   <X />
@@ -79,11 +81,12 @@ const HomePageLoggedIn = () => {
 
                 <div className="bg-black/30 backdrop-blur-xs rounded text-white w-full p-3 flex flex-col justify-between h-[40vh]">
                   <div className="space-y-4 w-[200px]">
-                    <h1 className="text-2xl">{homep.author}</h1>
-                    <p>{homep.content}</p>
+                    <h1 className="text-2xl">{homep.author.fullName}</h1>
+                    <Link to={`/blog/${homep._id}`}><p>{homep.description.substring(0, 100)}</p></Link>
+                    
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <p>{homep.time}</p>
+                    <p>{moment(homep.createdAt).format("MMM Do")}</p>
                     <Ellipsis />
                   </div>
                 </div>
