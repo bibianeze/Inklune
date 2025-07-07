@@ -23,7 +23,7 @@ const BlogProvider = ({ children }) => {
       
       // Make a GET request to the blog API with optional search query
       const { data } = await axios(
-        `http://localhost:3000/api/blog?title=${search}`
+        `http://localhost:8000/api/blog?title=${search}`
       );
 
       // Log the response (for debugging)

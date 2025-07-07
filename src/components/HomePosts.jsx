@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { homeposts } from "../Data/homeposts";
 import { CircleMinus } from "lucide-react";
 import { featured } from "../Data/featured";
-import moment from "moment";
+// import moment from "moment";
 import {
   Heart,
   MessageSquareText,
@@ -29,14 +29,15 @@ const HomePosts = () => {
   const handleToggleLike = async (blogId) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/blog/${blogId}/like`,
+        `http://localhost:8000/api/blog/${blogId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(response);
 
       if (response.status === 200) {
-        toast.success("done");
+        toast.success(response.data.message);
+        window.location.reload()
       }
     } catch (error) {
       console.log(error);
@@ -54,20 +55,20 @@ const HomePosts = () => {
   return (
     <div className="">
       <div className="grid grid-cols-1  gap-6 my-6">
-        {blogs.map((pro) => (
-          <div key={pro._id} className="bg-white  p-4 ">
+        {blogs.map((blog) => (
+          <div key={blog._id} className="bg-white  p-4 ">
             <hr className="py-3" />
             <div className="space-y-4">
               {/* Author Section */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
                   <img
-                    src={pro.author.profilePicture}
+                    src={blog.author.profilePicture}
                     alt="author"
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <p className="text-sm sm:text-base font-medium">
-                    {pro.author.fullName}
+                    {blog.author.fullName}
                   </p>
                 </div>
                 
@@ -79,20 +80,20 @@ const HomePosts = () => {
                 <div className="flex-1 space-y-4">
                   <div className="flex gap-4 justify-between">
                     <div>
-                      <Link to={`/blog/${pro._id}`} className="hover:underline">
+                      <Link to={`/blog/${blog._id}`} className="hover:underline">
                         <h3 className="text-lg sm:text-xl font-semibold">
-                          {pro.title}
+                          {blog.title}
                         </h3>
                       </Link>
 
                       <p className="text-gray-500 text-sm sm:text-base break-words">
-                        {pro.description}
+                        {blogpost.description.substring(0, 150)}
                       </p>
                     </div>
                     {/* Right: Image */}
                     <div>
                       <img
-                        src={pro.image}
+                        src={blog.image}
                         alt="post"
                         className="w-fulll hidden md:block w-[116px] h-[116px]"
                       />
@@ -103,23 +104,23 @@ const HomePosts = () => {
                   <div className="flex justify-between items-center text-gray-500 text-xs sm:text-sm flex-wrap gap-3">
                     {/* Left: date, likes, comments */}
                     <div className="flex gap-4 items-center flex-wrap">
-                      <p>{moment(pro.createdAt).format("MMM Do")}</p>
+                      <p>{moment(blog.createdAt).format("MMM Do")} </p>
                       <div className="flex items-center gap-1">
                         <button
                           className="cursor-pointer"
-                          onClick={() => handleToggleLike(pro._id)}
+                          onClick={() => handleToggleLike(blog._id)}
                         >
-                          {pro.likes.includes(user._id) ? (
+                          {blog.likes.includes(user._id)  ? (
                             <HeartIcon size={17} className="text-red-600" />
                           ) : (
                             <Heart size={17} />
                           )}
                         </button>
-                        {pro.likes.length}
+                        {blog.likes.length}
                       </div>
                       <div className="flex items-center gap-1">
                         <MessageSquareText size={17} />
-                        {pro.comments.length}
+                        {blog.comments.length}
                       </div>
                     </div>
 
@@ -130,13 +131,13 @@ const HomePosts = () => {
 
                       <button
                         className="bg-white rounded h-[34px] p-1 flex items-center"
-                        onClick={() => toggleOptions(pro.id)}
+                        onClick={() => toggleOptions(blog.id)}
                       >
                         <Ellipsis size={17} />
                       </button>
 
                       {/* Dropdown Options */}
-                      {openOptionId === pro.id && (
+                      {openOptionId === blog.id && (
                         <div className="absolute lg:left-0 right-0 bottom-full mt-2 w-30 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                           <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100">
                             <Pencil size={17} />
@@ -164,5 +165,5 @@ const HomePosts = () => {
   );
 };
 
-//http://localhost:3000/
+
 export default HomePosts;

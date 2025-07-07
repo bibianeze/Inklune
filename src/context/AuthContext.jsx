@@ -52,8 +52,8 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(updatedUser)); // Save updated user in localStorage
   };
 
-  // The component returns a context provider wrapping all children components
-  // This makes `user`, `token`, `login`, `logout`, `loading`, and `updateUser` available anywhere in the app
+  // login - email, password
+  // setToken() setUser()
   return (
     <authContext.Provider
       value={{ login, logout, user, token, loading, updateUser }}
