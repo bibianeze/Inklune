@@ -101,7 +101,8 @@ const SignUp = () => {
   return (
     <div className="container mx-auto w-11/12 min-h-[100vh] flex flex-col gap-2 items-center justify-center py-3">
       <div className="text-center space-y-4">
-        <h1 className="text-3xl md:text-4xl font-bold">Create your Account</h1>
+        <Link to="/">
+        <h1 className="text-3xl md:text-4xl font-bold">Create your Account</h1></Link>
         <p className="text-[rgba(164,164,164,1)] md:w-[90%]">
           Join INKLUNE and start sharing your stories with the world
         </p>

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { homeposts } from "../Data/homeposts";
 import { CircleMinus } from "lucide-react";
 import { featured } from "../Data/featured";
+import moment from "moment";
 // import moment from "moment";
 import {
   Heart,
   MessageSquareText,
   Bookmark,
-  Ellipsis,
+  // Ellipsis,
   Pencil,
   Share2,
   Trash2,
@@ -44,9 +45,9 @@ const HomePosts = () => {
     }
   };
 
-  const toggleOptions = (id) => {
-    setOpenOptionId((prevId) => (prevId === id ? null : id));
-  };
+  // const toggleOptions = (id) => {
+  //   setOpenOptionId((prevId) => (prevId === id ? null : id));
+  // };
 
   if (isLoading) {
     return <Loading height={"50vh"} />;
@@ -62,11 +63,12 @@ const HomePosts = () => {
               {/* Author Section */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
+                <Link to = "/profile">
                   <img
                     src={blog.author.profilePicture}
                     alt="author"
                     className="w-10 h-10 rounded-full object-cover"
-                  />
+                  /></Link>
                   <p className="text-sm sm:text-base font-medium">
                     {blog.author.fullName}
                   </p>
@@ -87,7 +89,7 @@ const HomePosts = () => {
                       </Link>
 
                       <p className="text-gray-500 text-sm sm:text-base break-words">
-                        {blogpost.description.substring(0, 150)}
+                        {blog.description.substring(0, 150)}
                       </p>
                     </div>
                     {/* Right: Image */}
@@ -95,7 +97,7 @@ const HomePosts = () => {
                       <img
                         src={blog.image}
                         alt="post"
-                        className="w-fulll hidden md:block w-[116px] h-[116px]"
+                        className=" hidden md:block size-[150px]"
                       />
                     </div>
                   </div>
@@ -124,36 +126,7 @@ const HomePosts = () => {
                       </div>
                     </div>
 
-                    {/* Right: bookmark and dropdown */}
-                    <div className="flex items-center gap-2 relative">
-                      <CircleMinus size={17} />
-                      <Bookmark size={17} />
-
-                      <button
-                        className="bg-white rounded h-[34px] p-1 flex items-center"
-                        onClick={() => toggleOptions(blog.id)}
-                      >
-                        <Ellipsis size={17} />
-                      </button>
-
-                      {/* Dropdown Options */}
-                      {openOptionId === blog.id && (
-                        <div className="absolute lg:left-0 right-0 bottom-full mt-2 w-30 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                          <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100">
-                            <Pencil size={17} />
-                            Edit
-                          </button>
-                          <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100">
-                            <Share2 size={17} />
-                            Share
-                          </button>
-                          <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100 text-red-500">
-                            <Trash2 size={17} />
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                    </div>
+                   
                   </div>
                 </div>
               </div>

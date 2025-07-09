@@ -65,7 +65,7 @@ const SignIn = () => {
       setIsSubmitting(true);
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/auth/login",
+          "http://localhost:8000/api/auth/login",
           { ...formData }
         );
         console.log(response);
@@ -97,7 +97,7 @@ const SignIn = () => {
 
   return (
     <div className="container mx-auto w-11/12 min-h-[100vh] flex flex-col gap-4 items-center justify-center py-3">
-      <img className="w-30 md:w-40" src={logo} alt="Inklune Logo" />
+      <Link to="/"><img className="w-30 md:w-40" src={logo} alt="Inklune Logo" /></Link>
       <div className="text-center space-y-4">
         <h1 className="text-3xl md:text-4xl font-bold">Welcome Back</h1>
         <p className="text-[rgba(164,164,164,1)] w-[90%]">

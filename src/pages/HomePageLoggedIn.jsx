@@ -64,16 +64,16 @@ const HomePageLoggedIn = () => {
             className="flex overflow-x-scroll no-scrollbar scroll-smooth space-x-4"
             ref={scrollRef}
           >
-            {blogs.slice(0,7).map((homep) => (
+            {blogs.slice(0,7).map((blog) => (
               <div
-                key={homep._id}
+                key={blog._id}
                 className="flex-shrink-0 w-[300px] sm:w-[250px] md:w-[300px] h-[400px] rounded-lg shadow-lg bg-cover bg-center text-white flex items-end relative"
                 style={{
-                  backgroundImage: `url(${homep.image})`
+                  backgroundImage: `url(${blog.image})`
                 }}
               >
                 <button
-                  onClick={() => handleDelete(homep._id)}
+                  onClick={() => handleDelete(blog._id)}
                   className="absolute top-0 right-0 p-2 bg-opacity-50 hover:bg-opacity-80 rounded-full"
                 >
                   <X />
@@ -81,13 +81,13 @@ const HomePageLoggedIn = () => {
 
                 <div className="bg-black/30 backdrop-blur-xs rounded text-white w-full p-3 flex flex-col justify-between h-[40vh]">
                   <div className="space-y-4 w-[200px]">
-                    <h1 className="text-2xl">{homep.author.fullName}</h1>
-                    <Link to={`/blog/${homep._id}`}><p>{homep.description.substring(0, 100)}</p></Link>
+                    <h1 className="text-2xl">{blog.author.fullName}</h1>
+                    <Link to={`/blog/${blog._id}`}><p>{blog.description.substring(0, 100)}</p></Link>
                     
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <p>{moment(homep.createdAt).format("MMM Do")}</p>
-                    <Ellipsis />
+                    <p>{moment(blog.createdAt).format("MMM Do")}</p>
+                  
                   </div>
                 </div>
               </div>

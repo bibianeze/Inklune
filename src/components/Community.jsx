@@ -55,7 +55,7 @@ const Community = () => {
 
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Trending Discussions */}
-          <div className="lg:w-2/3 bg-[rgba(196,192,207,0.1)] rounded-xl p-4">
+          <div className="lg:w-full bg-[rgba(196,192,207,0.1)] rounded-xl p-4">
             <h1 className="font-semibold text-2xl md:text-3xl mb-6">
               Trending Discussions
             </h1>
@@ -149,7 +149,7 @@ const Community = () => {
             ))}
           </div>
 
-          {/* Featured Section */}
+          {/* Featured Section
           <div className="lg:w-1/3 bg-[rgba(196,192,207,0.1)] p-4 rounded-xl">
             <h2 className="font-semibold text-2xl md:text-3xl mb-6">
               Featured
@@ -171,23 +171,10 @@ const Community = () => {
                     <p className="text-gray-600">{feature.Ftitle}</p>
                   </div>
                 </div>
-                <button
-                  disabled={!isLoggedIn}
-                  onClick={() => handleFollow(index)}
-                  className={`bg-[rgba(188,178,218,0.3)] py-1 px-4 rounded-xl text-sm mt-2 sm:mt-0 relative group ${
-                    !isLoggedIn ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {followedUsers.includes(index) ? "Following" : "Follow"}
-                  {!isLoggedIn && (
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
-                      Please log in to follow
-                    </span>
-                  )}
-                </button>
+               
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 

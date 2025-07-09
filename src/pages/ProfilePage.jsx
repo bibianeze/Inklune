@@ -32,7 +32,7 @@ const ProfilePage = () => {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h3 className="text-2xl font-bold">{user?.fullName} </h3>
                 <button
-                  className="bg-white shadow px-4 py-2 flex items-center gap-2 rounded hover:bg-gray-100 transition"
+                  className="bg-white shadow px-4 py-2 flex items-center cursor-pointer gap-2 rounded hover:bg-gray-100 transition"
                   onClick={() => setShowModal(true)}
                 >
                   Edit <Pencil size={18} />
@@ -52,7 +52,7 @@ const ProfilePage = () => {
           <div className="flex flex-wrap justify-between items-center gap-4">
             <div className="space-x-4">
               <button
-                className={`hover:text-purple-500 transition ${
+                className={`hover:text-purple-500 cursor-pointer transition ${
                   activeTab === "yourBlogs"
                     ? "text-purple-600 font-semibold"
                     : "text-gray-600"
@@ -62,7 +62,7 @@ const ProfilePage = () => {
                 Your Blogs
               </button>
               <button
-                className={`hover:text-purple-500 transition ${
+                className={`hover:text-purple-500 cursor-pointer transition ${
                   activeTab === "likedBlogs"
                     ? "text-purple-600 font-semibold"
                     : "text-gray-600"
@@ -72,14 +72,7 @@ const ProfilePage = () => {
                 Liked Blogs
               </button>
             </div>
-            <div className="space-x-4">
-              <button className="hover:text-purple-400 text-gray-600 transition">
-                Latest
-              </button>
-              <button className="hover:text-purple-400 text-gray-600 transition">
-                Popular
-              </button>
-            </div>
+           
           </div>
 
           {/* Blog Content */}

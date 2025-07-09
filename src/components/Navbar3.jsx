@@ -47,11 +47,14 @@ const Navbar3 = () => {
                 <LogOut className="text-red-500" />
               </button>
               <Link to="/profile" className="cursor-pointer">
+              <span className="w-[40px] h-[40px]">
                 <img
                   src={user?.profilePicture}
                   alt=""
-                  className="w-[40px] h-[40px]"
+                  className="size-[40px] rounded-full"
                 />
+              </span>
+                
               </Link>
             </div>
           </div>
@@ -67,34 +70,148 @@ const Navbar3 = () => {
 
         {/* Mobile dropdown menu */}
         {isOpen && (
-          <div className="md:hidden flex items-center bg-white px-6 py-4 space-x-4  text-[rgba(110,110,126,1)] ">
-            <form className="flex items-center gap-2 ">
-              <span className="relative left-7 ">
-                <Search size={16} />
-              </span>
-              <input
-                className="px-7 py-1 border border-gray-300 rounded-2xl bg-[rgba(196,192,207,0.1)]"
-                placeholder="Search Stories"
-                type="text"
-              />
-            </form>
-            <div className="flex gap-5 items-center mt-[-5px]">
-              <button
-                onClick={handleLogout}
-                className="cursor-pointer"
-                title="Log Out"
-              >
-                <LogOut className="text-red-500" />
-              </button>
-              <Link to="/profile" className="cursor-pointer">
-                <img
-                  src={user?.profilePicture}
-                  alt=""
-                  className="w-[40px] h-[40px]"
-                />
-              </Link>
-            </div>
-          </div>
+          // <div className="md:hidden flex items-center bg-white px-6 py-4 space-x-4  text-[rgba(110,110,126,1)] ">
+          //   <form className="flex items-center gap-2 ">
+          //     <span className="relative left-7 ">
+          //       <Search size={16} />
+          //     </span>
+          //     <input
+          //       className="px-7 py-1 border border-gray-300 rounded-2xl bg-[rgba(196,192,207,0.1)]"
+          //       placeholder="Search Stories"
+          //       type="text"
+          //     />
+          //   </form>
+          //   <div className="flex gap-5 items-center mt-[-5px]">
+          //     <button
+          //       onClick={handleLogout}
+          //       className="cursor-pointer"
+          //       title="Log Out"
+          //     >
+          //       <LogOut className="text-red-500" />
+          //     </button>
+
+              
+          //     <Link to="/profile" className="cursor-pointer">
+          //       <img
+          //         src={user?.profilePicture}
+          //         alt=""
+          //         className="w-[40px] h-[40px]"
+          //       />
+          //     </Link>
+            // </div>
+          // </div>
+           <div className="md:hidden z-10 absolute flex flex-col w-full items-start justify-center px-6 bg-white py-8 gap-4 space-x-4  text-[rgba(110,110,126,1)] ">
+                      {/* <ul className="lg:hidden gap-4 text-sm text-[rgba(110,110,126,1)] font-medium">
+                      <li>
+                        <a className="hover:underline" href="#">
+                          Home
+                        </a>
+                      </li>
+                      <li>
+                        <a className="hover:underline" href="#explore">
+                          Explore
+                        </a>
+                      </li>
+                      <li>
+                        <a className="hover:underline" href="#explore">
+                          Categories
+                        </a>
+                      </li>
+                      <li>
+                        <a className="hover:underline" href="#community">
+                          Community
+                        </a>
+                      </li>
+                    </ul>
+                      <form className="flex items-center gap-2 ">
+                        <span className="relative left-7 ">
+                          <Search size={16} />
+                        </span>
+                        <input
+                          className="px-7 py-1 border border-gray-300 rounded-2xl bg-[rgba(196,192,207,0.1)]"
+                          placeholder="Search Stories"
+                          type="text"
+                        />
+                      </form>
+                      <div className="flex gap-5 items-center mt-[-5px]">
+                        <button
+                          onClick={handleLogout}
+                          className="cursor-pointer"
+                          title="Log Out"
+                        >
+                          <LogOut className="text-red-500" />
+                        </button>
+                        <Link to="/profile" className="cursor-pointer">
+                          <img
+                            src={user?.profilePicture}
+                            alt=""
+                            className="w-[40px] h-[40px] object-cover"
+                          />
+                        </Link>
+                      </div> */}
+
+
+                      <form className="flex relative justify-center items-center gap-2 w-full">
+                          <span className="absolute left-3 ">
+                            <Search size={16} />
+                          </span>
+                          <input
+                            className="px-8 py-1 border w-full border-gray-300 rounded-2xl bg-[rgba(196,192,207,0.1)]"
+                            placeholder="Search Stories"
+                            type="text"
+                          />
+                        </form>
+              
+                        <ul className="space-y-5 place-items-start place-content-start text-center py-4">
+                          {/* <li>
+                            <a href="#">Home</a>
+                          </li>
+                          <li>
+                            <a href="#">Explore</a>
+                          </li>
+                          <li>
+                            <a href="#">Categories</a>
+                          </li> */}
+                          <li className="">
+                              <Link to="/loggedin" className="flex gap-2">
+                                <img src={write} alt="" />
+                                <a href="#">HOME</a>
+                              </Link>
+                            </li>
+                          
+                          <li className="">
+                            <Link to="/profile" className="cursor-pointer flex gap-2">
+                              <img
+                                src={user?.profilePicture}
+                                alt=""
+                                className="size-[27px] rounded-full object-cover"
+                              />
+                              <p>PROFILE</p>
+                            </Link>
+                          </li>
+                          
+
+  
+                            <Link to="/login" className="flex">
+                            <button className=" w-full  flex gap-2 rounded text-red-600 hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+                              
+                                <LogOut className="text-red-500"/>
+                                LOG OUT
+                            </button>
+                          </Link>
+                        </ul>
+                        
+                        {/* <div className="border-1 border-slate-200 w-full"> </div> */}
+              
+                        {/* <div className="mt-1 flex flex-col items-center gap-2 w-full py-4"> */}
+                          
+                          {/* <Link to="/register" className="w-full">
+                            <button className="bg-[rgba(138,99,247,1)] text-white w-[100%]  px-3 py-1 rounded hover:bg-purple-300  transition">
+                              Sign Up
+                            </button>
+                          </Link> */}
+                        {/* </div> */}
+                      </div>
         )}
       </div>
     </div>

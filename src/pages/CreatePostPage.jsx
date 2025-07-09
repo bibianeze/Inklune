@@ -153,7 +153,7 @@ const handleSubmit = async (e) => {
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="Title"
-                className="h-20 rounded-xl font-bold text-2xl sm:text-4xl p-4 w-full border"
+                className="h-20  rounded-xl font-bold text-2xl sm:text-4xl p-4 w-full border"
               />
               {errors.title && (
                 <span className="text-red-500 text-sm">{errors.title}</span>
@@ -162,14 +162,14 @@ const handleSubmit = async (e) => {
             {/* subtitle */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center relative">
-                <CirclePlus className="absolute ml-3" />
+                {/* <CirclePlus className="absolute ml-3" /> */}
                 <input
                   type="text"
                   name="subtitle"
                   value={formData.subtitle}
                   onChange={handleChange}
-                  placeholder="subtitle"
-                  className="pl-10 rounded-xl font-medium text-[20px]  p-4 w-full border"
+                  placeholder="Subtitle"
+                  className="px-4 py-2 rounded-xl font-medium text-[20px]  p-4 w-full border"
                 />
               </div>
               {errors.subtitle && (
@@ -181,7 +181,7 @@ const handleSubmit = async (e) => {
 
             <div className="flex flex-col gap-1">
               <div className="flex items-center relative">
-                <CirclePlus className="absolute ml-3" />
+                <CirclePlus className="absolute ml-3 cursor-pointer" />
                 <input
                   type="file"
                   name="media"
@@ -222,14 +222,14 @@ const handleSubmit = async (e) => {
             {/* Category */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center relative">
-                <CirclePlus className="absolute ml-3" />
+                {/* <CirclePlus className="absolute ml-3" /> */}
                 <input
                   type="text"
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
                   placeholder="Add Category"
-                  className="pl-10 py-2 rounded-xl w-full sm:w-1/2 border"
+                  className="px-2 py-2 rounded-xl w-full sm:w-1/2 border"
                 />
               </div>
               {errors.category && (
@@ -240,14 +240,14 @@ const handleSubmit = async (e) => {
             {/* Tags */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center relative">
-                <CirclePlus className="absolute ml-3" />
+                {/* <CirclePlus className="absolute ml-3" /> */}
                 <input
                   type="text"
                   name="tag"
                   value={formData.tag}
                   onChange={handleChange}
                   placeholder="Add Tags"
-                  className="pl-10 py-2 rounded-xl w-full sm:w-1/2 border"
+                  className="px-2 py-2 rounded-xl w-full sm:w-1/2 border"
                 />
               </div>
               {errors.tag && (
@@ -256,16 +256,16 @@ const handleSubmit = async (e) => {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center text-sm mt-6">
-              <button
+            <div className="flex flex-col sm:flex-row justify-end gap-4 text-sm mt-6">
+              {/* <button
                 type="button"
                 className="py-3 rounded-xl w-full sm:w-80 bg-[rgba(51,51,51,1)] text-white"
               >
                 Preview
-              </button>
+              </button> */}
               <button
                 type="submit"
-                className="py-3 rounded-xl w-full sm:w-80 text-white bg-[rgba(138,99,247,1)]"
+                className="py-3 rounded-xl w-full cursor-pointer sm:w-80 text-white bg-[rgba(138,99,247,1)]"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Publishing...." : "Publish"}

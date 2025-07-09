@@ -66,7 +66,7 @@ const EditProfileModal = ({ onClose }) => {
           <button
             onClick={onClose}
             aria-label="Close"
-            className="text-gray-700 hover:text-gray-900"
+            className="text-gray-700 cursor-pointer hover:text-gray-900"
           >
             <X size={24} />
           </button>
@@ -123,7 +123,7 @@ const EditProfileModal = ({ onClose }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="px-4 cursor-pointer py-2 bg-purple-600 text-white rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               {isSubmitting ? "Editing..." : "Save"}
             </button>

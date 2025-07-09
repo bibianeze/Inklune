@@ -31,7 +31,7 @@ function App() {
 
           <Route element={<PrivateRoute />}>
             <Route path="/loggedin" element={<HomePageLoggedIn />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile" element={<ProfilePage />}/>
             <Route path="/create" element={<CreatePostPage />} />
             <Route path="/writing" element={<CreatePostWriting />} />
             <Route path="/preview" element={<CreatePostPreview />} />

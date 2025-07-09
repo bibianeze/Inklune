@@ -38,7 +38,7 @@ const Navbar = () => {
         </div>
 
         {/* Right: Search + Buttons */}
-        <div className="hidden md:flex gap-5 items-center">
+        <div className="hidden lg:flex gap-5 items-center">
           <form className="flex items-center gap-2">
             <span className="relative left-9  text-gray-400 font-bold">
               <Search size={16} />
@@ -50,8 +50,8 @@ const Navbar = () => {
             />
           </form>
 
-          <div className="space-x-3">
-            <Link to="/login">
+          <div className="space-x-3 hidden lg:flex">
+            <Link to="/login ">
               <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
                 Sign In
               </button>
@@ -67,7 +67,7 @@ const Navbar = () => {
         {/* Hamburger menu button for mobile */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-gray-500"
+          className="lg:hidden text-gray-500"
         >
           {isOpen ? <X size={34} /> : <Menu size={34} />}
         </button>
@@ -75,8 +75,20 @@ const Navbar = () => {
 
       {/* Mobile dropdown menu */}
       {isOpen && (
-        <div className="md:hidden bg-white px-6 py-4 space-y-4  text-[rgba(110,110,126,1)] ">
-          <ul className="space-y-2">
+        <div className="lg:hidden bg-white px-10 py-4 space-y-4 flex flex-col items-center text-center  text-[rgba(110,110,126,1)] ">
+
+          <form className="flex relative justify-center items-center gap-2 w-full ">
+            <span className="absolute left-3 ">
+              <Search size={16} />
+            </span>
+            <input
+              className="px-8 py-1 border w-full border-gray-300 rounded-2xl bg-[rgba(196,192,207,0.1)]"
+              placeholder="Search Stories"
+              type="text"
+            />
+          </form>
+
+          <ul className="space-y-3">
             <li>
               <a href="#">Home</a>
             </li>
@@ -90,26 +102,17 @@ const Navbar = () => {
               <a href="#">Community</a>
             </li>
           </ul>
+          
+          <div className="border-1 border-slate-200 w-full"> </div>
 
-          <form className="flex items-center gap-2 ">
-            <span className="relative left-7 ">
-              <Search size={16} />
-            </span>
-            <input
-              className="px-7 py-1 border border-gray-300 rounded-2xl bg-[rgba(196,192,207,0.1)]"
-              placeholder="Search Stories"
-              type="text"
-            />
-          </form>
-
-          <div className="mt-4 flex flex-col gap-2">
-             <Link to="/login">
-              <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+          <div className="mt-4 flex flex-col gap-2 w-full ">
+             <Link to="/login" className="w-full">
+              <button className="border border-[rgba(138,99,247,1)] w-full px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
                 Sign In
               </button>
             </Link>
-            <Link to="/register">
-              <button className="bg-[rgba(138,99,247,1)] text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
+            <Link to="/register" className="w-full">
+              <button className="bg-[rgba(138,99,247,1)] text-white w-[100%]  px-3 py-1 rounded hover:bg-purple-300  transition">
                 Sign Up
               </button>
             </Link>

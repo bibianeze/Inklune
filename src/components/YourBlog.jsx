@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { profile } from "../Data/profile";
 import {
   Heart,
@@ -8,11 +9,13 @@ import {
   Pencil,
   Share2,
   Trash2,
+   HeartIcon,
 } from "lucide-react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Loading from "../components/Loading";
 import axios from "axios";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 const YourBlog = () => {
   const [openOptionId, setOpenOptionId] = useState(null);
@@ -22,10 +25,10 @@ const YourBlog = () => {
   const toggleOptions = (id) => {
     setOpenOptionId((prevId) => (prevId === id ? null : id));
   };
-  const { token } = useAuthContext();
+  const { token, user } = useAuthContext();
   const getAuthorsBlog = async () => {
     try {
-      const { data } = await axios(`http://localhost:3000/api/blog/author`, {
+      const { data } = await axios(`http://localhost:8000/api/blog/author`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(data);
@@ -39,6 +42,42 @@ const YourBlog = () => {
   useEffect(() => {
     getAuthorsBlog();
   }, []);
+
+  const handleDeleteBlog = async (blogId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/blog/${blogId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.status === 200) {
+        toast.success("blog deleted");
+        getAuthorsBlog(); // Refresh blog after deletion
+      }
+      // if (response.status === 403) {
+      //   toast.error("You do not have permission to delete this ");
+      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleToggleLike = async (blogId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/blog/${blogId}/like`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -74,9 +113,11 @@ const YourBlog = () => {
                 <div className="flex-1 space-y-4">
                   <div className="flex gap-4 justify-between">
                     <div>
-                      <h3 className="text-lg sm:text-xl font-semibold">
-                        {pro.title}
-                      </h3>
+                      <Link to={`/blog/${pro._id}`} className="hover:underline">
+                        <h3 className="text-lg sm:text-xl font-semibold">
+                          {pro.title}
+                        </h3>
+                      </Link>
                       <p className="text-gray-500 text-sm sm:text-base break-words">
                         {pro.description.substring(0, 100)}
                       </p>
@@ -96,10 +137,18 @@ const YourBlog = () => {
                     {/* Left: date, likes, comments */}
                     <div className="flex gap-4 items-center flex-wrap">
                       <p> {moment(pro.createdAt).format("MMM Do YY")}</p>
-                      <div className="flex items-center gap-1">
-                        <Heart size={17} />
+                      
+                      <button
+                        className="cursor-pointer flex"
+                        onClick={() => handleToggleLike(pro._id)}
+                      >
+                        {pro.likes.includes(user._id) ? (
+                          <HeartIcon size={17} className="text-red-600" />
+                        ) : (
+                          <Heart size={17} />
+                        )}
                         {pro.likes.length}
-                      </div>
+                      </button>
                       <div className="flex items-center gap-1">
                         <MessageSquareText size={17} />
                         {pro.comments.length}
@@ -108,13 +157,12 @@ const YourBlog = () => {
 
                     {/* Right: bookmark and dropdown */}
                     <div className="flex items-center gap-2 relative">
-                      <Bookmark size={17} />
-
                       <button
-                        className="bg-white rounded h-[34px] p-1 flex items-center"
-                        onClick={() => toggleOptions(pro._id)}
+                        onClick={() => handleDeleteBlog(pro._id)}
+                        className="w-full cursor-pointer flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100 text-red-500"
                       >
-                        <Ellipsis size={17} />
+                        {pro.author._id === user._id && <Trash2 size={17} />}
+                        Delete
                       </button>
 
                       {/* Dropdown Options */}
@@ -127,10 +175,6 @@ const YourBlog = () => {
                           <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100">
                             <Share2 size={17} />
                             Share
-                          </button>
-                          <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100 text-red-500">
-                            <Trash2 size={17} />
-                            Delete
                           </button>
                         </div>
                       )}

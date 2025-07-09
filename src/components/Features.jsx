@@ -30,9 +30,9 @@ const Features = () => {
     <div>
       <div className="container mx-auto w-11/12 ">
         {/* Header and Tabs */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-8 justify-between">
           <h3 className="text-2xl font-bold">Features List</h3>
-          <div className="bg-[rgba(188,178,218,0.3)] p-2 flex gap-3 rounded-2xl">
+          <div className="bg-[rgba(188,178,218,0.3)] p-2 flex flex-col md:flex-row gap-3 rounded-2xl">
             <button
               className={`px-5 rounded-xl cursor-pointer ${
                 activeTab === "latest" ? "bg-white font-bold" : ""
@@ -54,7 +54,7 @@ const Features = () => {
 
         {/* Content */}
         {activeTab === "latest" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-10 w-full">
+          <div className="grid grid-cols-1 relative sm:grid-cols-2 md:grid-cols-3 gap-6 py-10 w-full">
             {blogposts.map((blogpost) => (
               <div key={blogpost.id} className="w-full flex flex-col">
                 {/* Image */}
@@ -67,7 +67,7 @@ const Features = () => {
                 </div>
 
                 {/* Content */}
-                <div className="rounded-b-[25px] flex flex-col gap-5 p-4 sm:p-5 md:p-6 bg-white shadow-lg flex-grow">
+                <div className="rounded-b-[25px] flex flex-col gap-5 p-4 relative sm:p-5 md:p-6 bg-white shadow-lg flex-grow">
                   {/* Author Info */}
                   <div className="flex items-center gap-3">
                     <span className="shrink-0">
@@ -89,16 +89,16 @@ const Features = () => {
 
                   {/* Title and Content */}
                   <div className="space-y-2">
-                    <h3 className="font-bold text-lg sm:text-xl">
+                    <h3 className="font-bold text-lg sm:text-2xl">
                       {blogpost.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-gray-700">
+                    <p className="text-sm sm:text-base text-gray-700 pb-10">
                       {blogpost.content}
                     </p>
                   </div>
 
                   {/* Tags and Actions */}
-                  <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex absolute bottom-4  items-center justify-between gap-3">
                     <p className="bg-[rgba(188,178,218,0.3)] py-1 px-4 rounded-full text-sm cursor-pointer">
                       {blogpost.tags}
                     </p>

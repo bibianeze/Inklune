@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Navbar3 from "../components/Navbar3";
+// import Navbar3 from "../components/Navbar3";
 import createimg from "../assets/Frame 2147223357.png";
 import { CirclePlus } from "lucide-react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Navbar from "../components/Navbar";
 
 const CreatePostWriting = () => {
   const { user } = useAuthContext();
@@ -44,7 +45,7 @@ const CreatePostWriting = () => {
 
   return (
     <div>
-      <Navbar3 />
+      <Navbar3/>
       <div className="container mx-auto w-11/12 py-6">
         <div className="space-y-4">
           <p className="text-[rgba(142,142,142,1)]">

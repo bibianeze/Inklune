@@ -3,7 +3,17 @@ import React, { useEffect, useState } from "react";
 
 // Import UI components and icons
 import LoggedInNavbar from "../components/LoggedInNavbar";
-import { ArrowLeft, EllipsisVertical, ThumbsUp, Trash2, Heart, MessageSquareText, Pencil, Share2, ThumbsDown } from "lucide-react";
+import {
+  ArrowLeft,
+  EllipsisVertical,
+  ThumbsUp,
+  Trash2,
+  Heart,
+  MessageSquareText,
+  Pencil,
+  Share2,
+  ThumbsDown,
+} from "lucide-react";
 
 // Import static assets
 import bmess from "../assets/A beautiful hot mess.png";
@@ -30,9 +40,9 @@ const ViewingPost = () => {
   const { blogId } = useParams(); // Get blog ID from URL
   const [isLoading, setIsLoading] = useState(true); // Loading indicator state
   const [blog, setBlog] = useState({}); // Store fetched blog data
-  const [others, setOthers] = useState([]); // Store other blogs by same author
+  const [otherBlogs, setOthers] = useState([]); // Store other blogs by same author
   const [text, setText] = useState(""); // Comment input text
-  const { token } = useAuthContext(); // Auth token from context
+  const { token, user } = useAuthContext(); // Auth token from context
 
   // Fetch blog data by ID
   const handleGetBlog = async () => {
@@ -58,14 +68,15 @@ const ViewingPost = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/api/blog/${blogId}/comment`,
+        `http://localhost:8000/api/blog/${blogId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (data.success) {
         toast.success("Comment Added");
         setBlog(data.blog); // Refresh blog with new comment
-        setText(''); // Clear input
+        window.location.reload()
+        setText(""); // Clear input
       }
     } catch (error) {
       console.log(error);
@@ -76,15 +87,33 @@ const ViewingPost = () => {
   const handleDeleteComment = async (commentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/blog/${blogId}/comment/${commentId}`,
+        `http://localhost:8000/api/blog/${blogId}/comment/${commentId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+    
       if (response.status === 200) {
         toast.success("Comment deleted");
         handleGetBlog(); // Refresh blog after deletion
       }
       if (response.status === 403) {
         toast.error("You do not have permission to delete this comment");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleToggleLike = async (blogId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/blog/${blogId}/like`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -113,23 +142,23 @@ const ViewingPost = () => {
               {/* Blog header section */}
               <div className="flex flex-col sm:flex-row sm:justify-between gap-4 sm:gap-0 mb-7">
                 <Link to="/loggedin">
-                  <button className="bg-white flex gap-1 items-center px-2 py-1 rounded w-fit">
+                  <button className="bg-white cursor-pointer flex gap-1 items-center px-2 py-1 rounded w-fit">
                     <ArrowLeft size={19} />
                     <span>back</span>
                   </button>
                 </Link>
 
                 {/* Dropdown menu for blog actions */}
-                <div className="relative self-start sm:self-auto">
+                {/* <div className="relative self-start sm:self-auto">
                   <button
                     className="bg-white rounded h-[34px] p-1"
                     onClick={() => setShowOptions((prev) => !prev)}
                   >
                     <EllipsisVertical />
-                  </button>
+                  </button> */}
 
                   {/* Options dropdown */}
-                  {showOptions && (
+                  {/* {showOptions && (
                     <div className="absolute right-0 sm:left-0 mt-2 w-36 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
                       <button className="w-full flex gap-1 items-center px-4 py-2 text-left hover:bg-gray-100">
                         <Pencil size={17} />
@@ -146,8 +175,8 @@ const ViewingPost = () => {
                         Report Story
                       </button>
                     </div>
-                  )}
-                </div>
+                  )} */}
+                {/* </div> */}
               </div>
 
               {/* Blog content section */}
@@ -171,15 +200,26 @@ const ViewingPost = () => {
                   <p className="leading-relaxed text-sm sm:text-base">
                     {blog.description}
                   </p>
-                  <p className="bg-amber-200 rounded-lg px-1.5 w-fit">#{blog.tag}</p>
+                  <p className="bg-gray-300  rounded-full py-1 px-3 w-fit">
+                    #{blog.tag}
+                  </p>
 
                   {/* Like section */}
                   <div className="flex gap-2 items-center bg-white w-fit px-3 py-2 rounded text-gray-600">
                     <span className="text-sm">Like</span>
                     <div className="flex items-center gap-2">
-                      <button className="flex gap-1 items-center hover:text-red-500 transition-colors">
+                      <button
+                        onClick={() => handleToggleLike(blog._id)}
+                        className="flex gap-1 items-center  transition-colors"
+                      >
                         <span className="text-sm">{blog.likes.length}</span>
-                        <ThumbsUp size={17} color="gray" />
+
+                        {blog.likes.includes(user._id) ? (
+                        <ThumbsUp size={17}   className="text-red-600"/>
+                          
+                        ) : (
+                           <ThumbsUp size={17} color="gray" />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -189,7 +229,10 @@ const ViewingPost = () => {
                 <div className="mt-6 flex flex-col gap-4">
                   <div className="bg-white p-3 sm:p-4 rounded-xl flex flex-col gap-2">
                     <h3 className="text-lg font-semibold">Comment</h3>
-                    <form className="relative w-full" onSubmit={handleAddComment}>
+                    <form
+                      className="relative w-full"
+                      onSubmit={handleAddComment}
+                    >
                       <input
                         type="text"
                         className="bg-[rgba(188,178,218,0.3)] w-full border border-gray-400 px-4 py-3 pr-4 sm:pr-24 rounded-xl text-sm sm:text-base"
@@ -200,10 +243,10 @@ const ViewingPost = () => {
                       />
                       <button
                         type="submit"
-                        className="mt-2 sm:mt-0 sm:absolute sm:right-2 sm:top-1/2 sm:-translate-y-1/2 bg-[rgba(138,99,247,1)] text-white px-3 py-2 rounded-xl text-sm w-full sm:w-auto"
+                        className="mt-2 cursor-pointer sm:mt-0 sm:absolute sm:right-2 sm:top-1/2 sm:-translate-y-1/2 bg-[rgba(138,99,247,1)] text-white px-3 py-2 rounded-xl text-sm w-full sm:w-auto"
                       >
                         <span className="sm:hidden">Submit Comment</span>
-                        <span className="hidden sm:inline">Enter</span>
+                        <span className="hidden sm:inline">Enter a Comment</span>
                       </button>
                     </form>
                   </div>
@@ -212,7 +255,10 @@ const ViewingPost = () => {
                   {blog.comments.length > 0 && (
                     <div className="bg-white p-3 sm:p-4 rounded-xl space-y-4">
                       {blog.comments.map((comment) => (
-                        <div key={comment._id} className="py-2 bg-[rgba(188,178,218,0.3)] p-3 rounded-xl">
+                        <div
+                          key={comment._id}
+                          className="py-2 bg-[rgba(188,178,218,0.3)] p-3 rounded-xl"
+                        >
                           <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-0">
                             <div className="flex items-center gap-2">
                               <img
@@ -248,32 +294,34 @@ const ViewingPost = () => {
 
             {/* Right column - author info and other posts */}
             <div className="w-full xl:max-w-[400px] space-y-6">
-              <div className="bg-[rgba(196,192,207,0.1)] rounded-xl grid grid-cols-1 gap-5 py-5 w-full px-4">
-                <h3 className="text-lg font-semibold">{blog.author.fullName}</h3>
+              <div className="bg-[rgba(196,192,207,0.1)]  rounded-xl grid grid-cols-1 gap-5 pt-5 w-full shadow-lg/30">
+                <h3 className="text-lg px-3 font-semibold">
+                  {blog.author.fullName}
+                </h3>
                 <hr className="text-gray-300" />
-                {others.length > 0 && (
-                  <div className="space-y-6">
-                    {others.map((blogpost) => (
-                      <div key={blogpost._id} className="w-full">
+                {otherBlogs.length > 0 && (
+                  <div className="space-y-6 ">
+                    {otherBlogs.map((otherBlog) => (
+                      <div key={otherBlog._id} className="w-full ">
                         <img
-                          src={blogpost.image}
+                          src={otherBlog.image}
                           alt="Blog"
                           className="object-cover w-full h-48 sm:h-56 rounded-t-lg"
                         />
-                        <div className="rounded-b-lg flex flex-col gap-4 p-4 sm:p-6 bg-white shadow-lg">
+                        <div className="rounded-b-lg flex flex-col w-full gap-4 p-4 sm:p-6 bg-white">
                           <div className="space-y-2">
                             <h3 className="font-bold text-lg sm:text-xl leading-tight">
-                              {blogpost.title}
+                              {otherBlog.title}
                             </h3>
                             <p className="text-sm sm:text-base text-gray-600 line-clamp-3">
-                              {blogpost.description.substring(0, 150)}
+                              {otherBlog.description.substring(0, 150)}
                             </p>
                           </div>
                           <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-0 sm:items-center">
-                            <p className="bg-[rgba(188,178,218,0.3)] py-1 px-3 sm:px-5 rounded-full cursor-pointer text-sm w-fit hover:bg-[rgba(188,178,218,0.5)] transition-colors">
-                              {blogpost.tag}
+                            <p className="bg-[rgba(188,178,218,0.3)] py-1 px-3 text-center sm:px-5 rounded-full cursor-pointer text-sm w-fit hover:bg-[rgba(188,178,218,0.5)] transition-colors">
+                              {otherBlog.tag}
                             </p>
-                            <Link to={`/blog/${blogpost._id}`}>
+                            <Link to={`/blog/${otherBlog._id}`}>
                               <p className="text-[rgba(142,142,142,1)] underline text-sm hover:text-blue-600 cursor-pointer">
                                 Read more
                               </p>
@@ -286,7 +334,6 @@ const ViewingPost = () => {
                 )}
               </div>
             </div>
-
           </div>
         </div>
       </div>
