@@ -28,6 +28,7 @@ import { useParams, Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import axios from "axios";
 import moment from "moment";
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 // Import authentication context and toast notifications
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -215,10 +216,10 @@ const ViewingPost = () => {
                         <span className="text-sm">{blog.likes.length}</span>
 
                         {blog.likes.includes(user._id) ? (
-                        <ThumbsUp size={17}   className="text-red-600"/>
+                         <FaHeart color="red" size={17} />  
                           
                         ) : (
-                           <ThumbsUp size={17} color="gray" />
+                           <FaRegHeart color="gray" size={17} /> 
                         )}
                       </button>
                     </div>

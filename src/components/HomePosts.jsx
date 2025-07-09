@@ -20,6 +20,7 @@ import { useBlogContext } from "../hooks/useBlogContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const HomePosts = () => {
   const [openOptionId, setOpenOptionId] = useState(null);
@@ -113,9 +114,9 @@ const HomePosts = () => {
                           onClick={() => handleToggleLike(blog._id)}
                         >
                           {blog.likes.includes(user._id)  ? (
-                            <HeartIcon size={17} className="text-red-600" />
+                            <FaHeart color="red" size={17} /> 
                           ) : (
-                            <Heart size={17} />
+                            <FaRegHeart color="gray" size={17} />
                           )}
                         </button>
                         {blog.likes.length}

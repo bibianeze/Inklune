@@ -140,13 +140,13 @@ const YourBlog = () => {
                       <p> {moment(pro.createdAt).format("MMM Do YY")}</p>
                       
                       <button
-                        className="cursor-pointer flex"
+                        className="cursor-pointer flex gap-1"
                         onClick={() => handleToggleLike(pro._id)}
                       >
                         {pro.likes.includes(user._id) ? (
-                          <FaHeart color="red" size={24} />   
+                          <FaHeart color="red" size={17} />   
                         ) : (
-                          <FaRegHeart color="gray" size={24} /> 
+                          <FaRegHeart color="gray" size={17} /> 
                         )}
                         {pro.likes.length}
                       </button>

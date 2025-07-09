@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { likedblogs } from "../Data/likedblogs";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import {
   Heart,
   MessageSquareText,
@@ -149,9 +150,9 @@ const LikedBlog = () => {
                         onClick={() => handleToggleLike(pro._id)}
                       >
                         {pro.likes.includes(user._id) ? (
-                          <HeartIcon size={17} className="text-red-600" />
+                          <FaHeart color="red" size={17} /> 
                         ) : (
-                          <Heart size={17} />
+                         <FaRegHeart color="gray" size={17} /> 
                         )}
                         {pro.likes.length}
                       </button>
