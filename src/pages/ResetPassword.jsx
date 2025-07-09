@@ -152,7 +152,7 @@ export const ResetPassword = () => {
           </form>
 
           <Link to="/login">
-          <button className="bg-[rgba(51,51,51,1)] text-white px-4 py-2 rounded w-full hover:bg-gray-600">
+          <button className="bg-[rgba(51,51,51,1)] cursor-pointer text-white px-4 py-2 rounded w-full hover:bg-gray-600">
             Back to Login
           </button></Link>
         </div>

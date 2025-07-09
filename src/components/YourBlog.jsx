@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { profile } from "../Data/profile";
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import {
   Heart,
   MessageSquareText,
@@ -143,9 +144,9 @@ const YourBlog = () => {
                         onClick={() => handleToggleLike(pro._id)}
                       >
                         {pro.likes.includes(user._id) ? (
-                          <HeartIcon size={17} className="text-red-600" />
+                          <FaHeart color="red" size={24} />   
                         ) : (
-                          <Heart size={17} />
+                          <FaRegHeart color="gray" size={24} /> 
                         )}
                         {pro.likes.length}
                       </button>

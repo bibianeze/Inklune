@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import confirmreset from "../assets/amico.png";
 import { ArrowRight } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -28,9 +29,10 @@ const ConfirmResetPassword = () => {
             <button className="md:w-[50%] text-lg bg-[rgba(138,99,247,1)]  text-white px-4 py-2 rounded hover:bg-purple-400">
               Contact Support
             </button>
-            <button className="bg-[rgba(51,51,51,1)] text-white px-4 py-2 rounded w-full hover:bg-gray-600">
+           <Link to="/login">
+            <button className="bg-[rgba(51,51,51,1)] cursor-pointer text-white px-4 py-2 rounded w-full hover:bg-gray-600">
               Back to Login
-            </button>
+            </button></Link>
           </div>
         </div>
       </div>
