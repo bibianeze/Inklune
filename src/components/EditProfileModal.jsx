@@ -35,7 +35,7 @@ const EditProfileModal = ({ onClose }) => {
       }
 
       const response = await axios.patch(
-        "http://localhost:8000/api/auth/user",
+        "https://inklune-blog-server.onrender.com/api/auth/user",
         formData,
         {
           headers: {

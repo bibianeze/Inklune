@@ -36,7 +36,7 @@ const ForgotPassword = () => {
       // Submit to server here
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/auth/forgot-password",
+          "https://inklune-blog-server.onrender.com/api/auth/forgot-password",
           { email }
         );
         if ((response.status = 200)) {

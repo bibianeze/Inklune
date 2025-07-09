@@ -28,7 +28,7 @@ const YourBlog = () => {
   const { token, user } = useAuthContext();
   const getAuthorsBlog = async () => {
     try {
-      const { data } = await axios(`http://localhost:8000/api/blog/author`, {
+      const { data } = await axios(`https://inklune-blog-server.onrender.com/api/blog/author`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(data);
@@ -46,7 +46,7 @@ const YourBlog = () => {
   const handleDeleteBlog = async (blogId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/blog/${blogId}`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -64,7 +64,7 @@ const YourBlog = () => {
   const handleToggleLike = async (blogId) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/blog/${blogId}/like`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

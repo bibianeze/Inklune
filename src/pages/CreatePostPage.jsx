@@ -96,7 +96,7 @@ const handleSubmit = async (e) => {
 
     // Send a POST request to your backend API to create the blog post
     const response = await axios.post(
-      "http://localhost:8000/api/blog", // Backend blog creation endpoint
+      "https://inklune-blog-server.onrender.com/api/blog", // Backend blog creation endpoint
       data,                             // Payload is the FormData object
       {
         headers: {

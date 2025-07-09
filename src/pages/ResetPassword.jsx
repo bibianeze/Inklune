@@ -68,7 +68,7 @@ export const ResetPassword = () => {
       // Proceed to API or next step
       try {
         const response = await axios.post(
-          `http://localhost:8000/api/auth/reset-password`,
+          `https://inklune-blog-server.onrender.com/api/auth/reset-password`,
           { token, password: formData.password }
         );
         if (response.status === 200) {

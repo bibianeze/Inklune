@@ -48,7 +48,7 @@ const ViewingPost = () => {
   const handleGetBlog = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios(`http://localhost:8000/api/blog/${blogId}`);
+      const { data } = await axios(`https://inklune-blog-server.onrender.com/api/blog/${blogId}`);
       console.log(data);
       setBlog(data.blog);
       setOthers(data.otherBlogs);
@@ -68,7 +68,7 @@ const ViewingPost = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `http://localhost:8000/api/blog/${blogId}/comment`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -87,7 +87,7 @@ const ViewingPost = () => {
   const handleDeleteComment = async (commentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/blog/${blogId}/comment/${commentId}`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}/comment/${commentId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
     
@@ -105,7 +105,7 @@ const ViewingPost = () => {
   const handleToggleLike = async (blogId) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/blog/${blogId}/like`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

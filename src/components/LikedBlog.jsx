@@ -29,7 +29,7 @@ const LikedBlog = () => {
   const getAuthorsLikedBlog = async () => {
     try {
       const { data } = await axios(
-        `http://localhost:8000/api/blog/author/likes`,
+        `https://inklune-blog-server.onrender.com/api/blog/author/likes`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -50,7 +50,7 @@ const LikedBlog = () => {
     const handleDeleteBlog = async (blogId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/blog/${blogId}`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -68,7 +68,7 @@ const LikedBlog = () => {
   const handleToggleLike = async (blogId) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/blog/${blogId}/like`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

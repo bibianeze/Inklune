@@ -30,7 +30,7 @@ const HomePosts = () => {
   const handleToggleLike = async (blogId) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/blog/${blogId}/like`,
+        `https://inklune-blog-server.onrender.com/api/blog/${blogId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
