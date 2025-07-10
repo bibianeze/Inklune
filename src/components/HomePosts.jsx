@@ -122,7 +122,7 @@ const HomePosts = () => {
                         {blog.likes.length}
                       </div>
                       <Link to={`/blog/${blog._id}`}>
-                      <button className="flex items-center gap-1">
+                      <button className="flex cursor-pointer items-center gap-1">
                         <MessageSquareText size={17} />
                         {blog.comments.length}
                       </button>

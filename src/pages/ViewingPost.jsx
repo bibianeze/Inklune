@@ -211,7 +211,7 @@ const ViewingPost = () => {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleToggleLike(blog._id)}
-                        className="flex gap-1 items-center  transition-colors"
+                        className="flex gap-1 items-center cursor-pointer transition-colors"
                       >
                         <span className="text-sm">{blog.likes.length}</span>
 
@@ -274,7 +274,7 @@ const ViewingPost = () => {
                             <div className="flex gap-2 items-center self-start sm:self-auto">
                               <button
                                 onClick={() => handleDeleteComment(comment._id)}
-                                className="hover:text-red-500 transition-colors"
+                                className="hover:text-red-500 cursor-pointer transition-colors"
                               >
                                 <Trash2 size={17} color="gray" />
                               </button>

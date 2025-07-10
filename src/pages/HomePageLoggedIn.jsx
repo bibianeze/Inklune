@@ -54,7 +54,7 @@ const HomePageLoggedIn = () => {
         {/* Carousel */}
         <div className="relative">
           <button
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-500 text-white p-2 rounded-full shadow-md"
+            className="absolute left-0 top-1/2 cursor-pointer transform -translate-y-1/2 z-10 bg-gray-500 text-white p-2 rounded-full shadow-md"
             onClick={() => scroll("left")}
           >
             <ArrowLeft />
@@ -74,7 +74,7 @@ const HomePageLoggedIn = () => {
               >
                 <button
                   onClick={() => handleDelete(blog._id)}
-                  className="absolute top-0 right-0 p-2 bg-opacity-50 hover:bg-opacity-80 rounded-full"
+                  className="absolute top-0 right-0 p-2 cursor-pointer bg-opacity-50 hover:bg-opacity-80 rounded-full"
                 >
                   <X />
                 </button>
@@ -95,7 +95,7 @@ const HomePageLoggedIn = () => {
           </div>
 
           <button
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-500 text-white p-2 rounded-full shadow-md"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer bg-gray-500 text-white p-2 rounded-full shadow-md"
             onClick={() => scroll("right")}
           >
             <ArrowRight />
