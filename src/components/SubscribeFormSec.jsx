@@ -51,7 +51,7 @@ const SubscribeFormSec = () => {
           />
           <button
             type="submit"
-            className="bg-[rgba(138,99,247,1)] text-white py-2 px-7 rounded-lg hover:bg-purple-500 transition"
+            className="bg-[rgba(138,99,247,1)] cursor-pointer text-white py-2 px-7 rounded-lg hover:bg-purple-500 transition"
           >
             Subscribe
           </button>

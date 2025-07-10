@@ -24,12 +24,12 @@ const Hero = () => {
               </p>
               <div className="space-x-3 mt-3 flex flex-col md:flex-row md:justify-between lg:justify-start gap-2">
                 <Link to="/register" className='w-full'>
-                  <button className="bg-[rgba(138,99,247,1)] text-white w-[180px]  px-5 py-2 rounded hover:bg-purple-300  transition">
+                  <button className="bg-[rgba(138,99,247,1)] cursor-pointer text-white w-[180px]  px-5 py-2 rounded hover:bg-purple-300  transition">
                     Start Writing
                   </button>
                 </Link>
                 <Link to="/register" className='w-full'>
-                <button className="border border-[rgba(138,99,247,1)] w-[180px] px-5 py-2 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+                <button className="border border-[rgba(138,99,247,1)] cursor-pointer w-[180px] px-5 py-2 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
                   Explore Stories
                 </button>
                 </Link>

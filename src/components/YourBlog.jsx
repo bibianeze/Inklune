@@ -150,10 +150,13 @@ const YourBlog = () => {
                         )}
                         {pro.likes.length}
                       </button>
-                      <div className="flex items-center gap-1">
+                      
+                      <Link to={`/blog/${pro._id}`}>
+                      <button className="flex items-center gap-1">
                         <MessageSquareText size={17} />
                         {pro.comments.length}
-                      </div>
+                      </button>
+                      </Link>
                     </div>
 
                     {/* Right: bookmark and dropdown */}

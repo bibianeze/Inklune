@@ -157,10 +157,13 @@ const LikedBlog = () => {
                         {pro.likes.length}
                       </button>
                     </div>
-                    <div className="flex items-center gap-1">
+                    
+                    <Link to={`/blog/${pro._id}`}>
+                    <button className="flex items-center gap-1">
                       <MessageSquareText size={17} />
                       <span>{pro.comments.length}</span>
-                    </div>
+                    </button>
+                    </Link>
                   </div>
 
                   <div className="flex items-center gap-2 relative">

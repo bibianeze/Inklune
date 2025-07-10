@@ -52,12 +52,12 @@ const Navbar = () => {
 
           <div className="space-x-3 hidden lg:flex">
             <Link to="/login ">
-              <button className="border border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+              <button className="border cursor-pointer border-[rgba(138,99,247,1)] px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
                 Sign In
               </button>
             </Link>
             <Link to="/register">
-              <button className="bg-[rgba(138,99,247,1)] text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
+              <button className="bg-[rgba(138,99,247,1)] cursor-pointer text-white  px-3 py-1 rounded hover:bg-purple-300  transition">
                 Sign Up
               </button>
             </Link>
@@ -107,12 +107,12 @@ const Navbar = () => {
 
           <div className="mt-4 flex flex-col gap-2 w-full ">
              <Link to="/login" className="w-full">
-              <button className="border border-[rgba(138,99,247,1)] w-full px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
+              <button className="border cursor-pointer border-[rgba(138,99,247,1)] w-full px-3 py-1 rounded text-[rgba(138,99,247,1)] hover:text-white hover:bg-[rgba(138,99,247,1)] transition">
                 Sign In
               </button>
             </Link>
             <Link to="/register" className="w-full">
-              <button className="bg-[rgba(138,99,247,1)] text-white w-[100%]  px-3 py-1 rounded hover:bg-purple-300  transition">
+              <button className="bg-[rgba(138,99,247,1)] cursor-pointer text-white w-[100%]  px-3 py-1 rounded hover:bg-purple-300  transition">
                 Sign Up
               </button>
             </Link>

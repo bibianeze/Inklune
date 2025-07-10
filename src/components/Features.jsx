@@ -107,7 +107,7 @@ const Features = () => {
                       <button
                         disabled={likedPosts.includes(blogpost.id)}
                         onClick={() => handleLike(blogpost.id)}
-                        className={`flex items-center gap-1 text-gray-500 font-medium text-sm transition-opacity ${
+                        className={`flex cursor-pointer items-center gap-1 text-gray-500 font-medium text-sm transition-opacity ${
                           likedPosts.includes(blogpost.id)
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:opacity-80"
@@ -123,7 +123,7 @@ const Features = () => {
                       <button
                         disabled={commentedPosts.includes(blogpost.id)}
                         onClick={() => handleComment(blogpost.id)}
-                        className={`flex items-center gap-1 text-gray-500 font-medium text-sm transition-opacity ${
+                        className={`flex items-center cursor-pointer gap-1 text-gray-500 font-medium text-sm transition-opacity ${
                           commentedPosts.includes(blogpost.id)
                             ? "opacity-50 cursor-not-allowed"
                             : "hover:opacity-80"

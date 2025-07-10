@@ -14,12 +14,12 @@ const CreateAccount = () => {
         </p>
         <div className="flex gap-3">
           <Link to="/register">
-            <button className="text-[rgba(138,99,247,1)] bg-white  hover:bg-transparent hover:border-1 hover:border-white hover:text-white py-2 px-4 rounded-lg">
+            <button className="text-[rgba(138,99,247,1)] cursor-pointer bg-white  hover:bg-transparent hover:border-1 hover:border-white hover:text-white py-2 px-4 rounded-lg">
               Create Account
             </button>
           </Link>
           <Link to="/login">
-            <button className="border-1 border-white text-white hover:bg-white hover:text-[rgba(138,99,247,1)] py-2 px-4 rounded-lg">
+            <button className="border-1 border-white cursor-pointer text-white hover:bg-white hover:text-[rgba(138,99,247,1)] py-2 px-4 rounded-lg">
               Learn more
             </button>
           </Link>

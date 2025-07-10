@@ -102,7 +102,7 @@ const Community = () => {
                         <button
                           disabled={likedPosts.includes(comm.id)}
                           onClick={() => handleLike(comm.id)}
-                          className={`flex items-center gap-1 text-gray-500 font-medium text-sm transition-opacity ${
+                          className={`flex cursor-pointer items-center gap-1 text-gray-500 font-medium text-sm transition-opacity ${
                             likedPosts.includes(comm.id)
                               ? "opacity-50 cursor-not-allowed"
                               : "hover:opacity-80"
@@ -135,7 +135,7 @@ const Community = () => {
                       {/* Join Discussion */}
                       <button
                         onClick={() => setShowModal(true)}
-                        className="text-indigo-600 font-medium mt-2 md:mt-0 relative group"
+                        className="text-indigo-600 cursor-pointer font-medium mt-2 md:mt-0 relative group"
                       >
                         Join discussion
                         <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
